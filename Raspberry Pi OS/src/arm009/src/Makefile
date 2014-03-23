@@ -8,7 +8,7 @@ SRC_DIR = ./
 TARGET	= $(BIN_DIR)kernel.img
 LIST	= $(OBJ_DIR)kernel.list
 MAP		= $(OBJ_DIR)kernel.map
-LINKSCR	= $(RES_DIR)kernel.ld
+LINKSCR	= $(RES_DIR)rpi.x
 
 LINKED_ELF = $(OBJ_DIR)output.elf
 
@@ -34,8 +34,8 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.s
 
 # Create object files from c files.
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(TOOLCHAIN)-gcc -I$(SRC_DIR) $< -o $@
-	$(TOOLCHAIN)-gcc -S -I$(SRC_DIR) $< -o $(basename $@).list
+	$(TOOLCHAIN)-gcc -nostartfiles -I$(SRC_DIR) $< -o $@
+#	$(TOOLCHAIN)-gcc -S -I$(SRC_DIR) $< -o $(basename $@).list
 
 
 # Rule to make the listing file.
