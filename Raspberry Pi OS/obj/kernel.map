@@ -1,9 +1,17 @@
 
 Discarded input sections
 
- .bss           0x00000000        0x0 ../obj/main.o
+ .bss           0x00000000        0x0 ../obj/boot.o
  .ARM.attributes
-                0x00000000       0x14 ../obj/main.o
+                0x00000000       0x14 ../obj/boot.o
+ .bss           0x00000000        0x0 ../obj/main.o
+ .comment       0x00000000       0x31 ../obj/main.o
+ .ARM.attributes
+                0x00000000       0x30 ../obj/main.o
+ .bss           0x00000000        0x0 ../obj/rpi_startup.o
+ .comment       0x00000000       0x31 ../obj/rpi_startup.o
+ .ARM.attributes
+                0x00000000       0x30 ../obj/rpi_startup.o
 
 Memory Configuration
 
@@ -12,20 +20,28 @@ Name             Origin             Length             Attributes
 
 Linker script and memory map
 
+LOAD ../obj/boot.o
 LOAD ../obj/main.o
+LOAD ../obj/rpi_startup.o
 
-.init           0x00008000       0x48
+.init           0x00008000        0xc
  *(.init)
- .init          0x00008000       0x48 ../obj/main.o
+ .init          0x00008000        0xc ../obj/boot.o
                 0x00008000                _start
 
-.text           0x00008048        0x0
+.text           0x0000800c       0xe8
  *(.text)
- .text          0x00008048        0x0 ../obj/main.o
+ .text          0x0000800c        0x0 ../obj/boot.o
+ .text          0x0000800c       0xd8 ../obj/main.o
+                0x0000800c                main
+ .text          0x000080e4       0x10 ../obj/rpi_startup.o
+                0x000080e4                _rpi_startup
 
-.data           0x00008048        0x0
+.data           0x000080f4        0x0
  *(.data)
- .data          0x00008048        0x0 ../obj/main.o
+ .data          0x000080f4        0x0 ../obj/boot.o
+ .data          0x000080f4        0x0 ../obj/main.o
+ .data          0x000080f4        0x0 ../obj/rpi_startup.o
 
 /DISCARD/
  *(*)

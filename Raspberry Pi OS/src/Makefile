@@ -30,12 +30,12 @@ $(LINKED_ELF): $(OBJ_FILES) $(LINKSCR)
 
 # Create object files from assembly files.
 $(OBJ_DIR)%.o: $(SRC_DIR)%.s
-	$(TOOLCHAIN)-as -I $(SRC_DIR) $< -o $@
+	$(TOOLCHAIN)-as -c $< -o $@
 
 # Create object files from c files.
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(TOOLCHAIN)-gcc -I$(SRC_DIR) $< -o $@
-	$(TOOLCHAIN)-gcc -S -I$(SRC_DIR) $< -o $(basename $@).list
+	$(TOOLCHAIN)-gcc -c $< -o $@
+	$(TOOLCHAIN)-gcc -S $< -o $(basename $@).list
 
 
 # Rule to make the listing file.
