@@ -5,14 +5,14 @@ OBJ_DIR = ../obj/
 RES_DIR = ../res/
 SRC_DIR = ./
 
-TARGET	= $(BIN_DIR)kernel.img
-LIST	= $(OBJ_DIR)kernel.list
-MAP		= $(OBJ_DIR)kernel.map
-LINKSCR	= $(RES_DIR)kernel.ld
+TARGET	:= $(BIN_DIR)kernel.img
+LIST	:= $(OBJ_DIR)kernel.list
+MAP		:= $(OBJ_DIR)kernel.map
+LINKSCR	:= $(RES_DIR)kernel.ld
 
-LINKED_ELF = $(OBJ_DIR)output.elf
+LINKED_ELF := $(OBJ_DIR)output.elf
 
-OBJ_FILES = $(patsubst $(SRC_DIR)%.s,$(OBJ_DIR)%.o,$(wildcard $(SRC_DIR)*.s))
+OBJ_FILES := $(patsubst $(SRC_DIR)%.s,$(OBJ_DIR)%.o,$(wildcard $(SRC_DIR)*.s))
 OBJ_FILES += $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(wildcard $(SRC_DIR)*.c))
 
 
@@ -34,7 +34,7 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.s
 
 # Create object files from c files.
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(TOOLCHAIN)-gcc -c $< -o $@
+	$(TOOLCHAIN)-gcc -O0 -c $< -o $@
 	$(TOOLCHAIN)-gcc -S $< -o $(basename $@).list
 
 
