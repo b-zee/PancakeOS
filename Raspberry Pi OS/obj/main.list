@@ -1,5 +1,7 @@
-	.cpu arm7tdmi
-	.fpu softvfp
+	.arch armv6zk
+	.eabi_attribute 27, 3
+	.eabi_attribute 28, 1
+	.fpu vfp
 	.eabi_attribute 20, 1
 	.eabi_attribute 21, 1
 	.eabi_attribute 23, 3
@@ -7,7 +9,7 @@
 	.eabi_attribute 25, 1
 	.eabi_attribute 26, 1
 	.eabi_attribute 30, 6
-	.eabi_attribute 34, 0
+	.eabi_attribute 34, 1
 	.eabi_attribute 18, 4
 	.file	"main.c"
 	.text
@@ -15,7 +17,6 @@
 	.global	main
 	.type	main, %function
 main:
-	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
 	@ link register save eliminated.
@@ -28,25 +29,18 @@ main:
 	add	r3, r3, #4
 	ldr	r2, [fp, #-12]
 	add	r2, r2, #4
-	ldr	r2, [r2, #0]
+	ldr	r2, [r2]
 	orr	r2, r2, #262144
-	str	r2, [r3, #0]
+	str	r2, [r3]
 	ldr	r3, [fp, #-12]
 	add	r3, r3, #28
 	mov	r2, #65536
-	str	r2, [r3, #0]
-	ldr	r3, [fp, #-12]
-	add	r3, r3, #4
-	ldr	r2, [fp, #-12]
-	add	r2, r2, #4
-	ldr	r2, [r2, #0]
-	orr	r2, r2, #262144
-	str	r2, [r3, #0]
+	str	r2, [r3]
 .L6:
 	ldr	r3, [fp, #-12]
 	add	r3, r3, #28
 	mov	r2, #65536
-	str	r2, [r3, #0]
+	str	r2, [r3]
 	mov	r3, #0
 	str	r3, [fp, #-8]
 	b	.L2
@@ -62,7 +56,7 @@ main:
 	ldr	r3, [fp, #-12]
 	add	r3, r3, #40
 	mov	r2, #65536
-	str	r2, [r3, #0]
+	str	r2, [r3]
 	mov	r3, #0
 	str	r3, [fp, #-8]
 	b	.L4
@@ -82,4 +76,4 @@ main:
 	.word	538968064
 	.word	499999
 	.size	main, .-main
-	.ident	"GCC: (Sourcery CodeBench Lite 2012.09-63) 4.7.2"
+	.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-branch revision 211358]"

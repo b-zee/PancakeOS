@@ -5,13 +5,16 @@ extern int main();
 
 void _rpi_startup()
 {
-    int* bss = &__bss_start;
-    int* bss_end = &__bss_end;
 
-    while( bss < bss_end )
-        *bss++ = 0;
+	int *bss = &__bss_start;
+	int *bss_end = &__bss_end;
 
-    main();
+	while ( bss < bss_end ) {
+		*bss++ = 0;
+	}
 
-    while(1);
+	(void)main();
+
+	while(1);
+
 }

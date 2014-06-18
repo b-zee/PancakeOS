@@ -1,13 +1,15 @@
 TARGET = main.exe
 OBJECTS = main.o
 
+OPTIONS = -Wall -Wextra -Wpedantic -std=c99 -O3
+
 all: $(TARGET)
 
 $(TARGET): $(OBJECTS)
-	gcc -std=c99 -o $@ $^
+	gcc $(OPTIONS) -o $@ $^
 
 %.o: %.c
-	gcc -std=c99 -o $@ -c $<
+	gcc $(OPTIONS) -o $@ -c $<
 #	gcc -S $< -o $(basename $@).list
 
 clean:

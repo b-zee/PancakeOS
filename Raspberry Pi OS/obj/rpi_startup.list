@@ -1,5 +1,7 @@
-	.cpu arm7tdmi
-	.fpu softvfp
+	.arch armv6zk
+	.eabi_attribute 27, 3
+	.eabi_attribute 28, 1
+	.fpu vfp
 	.eabi_attribute 20, 1
 	.eabi_attribute 21, 1
 	.eabi_attribute 23, 3
@@ -7,7 +9,7 @@
 	.eabi_attribute 25, 1
 	.eabi_attribute 26, 1
 	.eabi_attribute 30, 6
-	.eabi_attribute 34, 0
+	.eabi_attribute 34, 1
 	.eabi_attribute 18, 4
 	.file	"rpi_startup.c"
 	.text
@@ -15,7 +17,6 @@
 	.global	_rpi_startup
 	.type	_rpi_startup, %function
 _rpi_startup:
-	@ Function supports interworking.
 	@ args = 0, pretend = 0, frame = 8
 	@ frame_needed = 1, uses_anonymous_args = 0
 	stmfd	sp!, {fp, lr}
@@ -28,11 +29,10 @@ _rpi_startup:
 	b	.L2
 .L3:
 	ldr	r3, [fp, #-8]
+	add	r2, r3, #4
+	str	r2, [fp, #-8]
 	mov	r2, #0
-	str	r2, [r3, #0]
-	ldr	r3, [fp, #-8]
-	add	r3, r3, #4
-	str	r3, [fp, #-8]
+	str	r2, [r3]
 .L2:
 	ldr	r2, [fp, #-8]
 	ldr	r3, [fp, #-12]
@@ -47,4 +47,4 @@ _rpi_startup:
 	.word	__bss_start
 	.word	__bss_end
 	.size	_rpi_startup, .-_rpi_startup
-	.ident	"GCC: (Sourcery CodeBench Lite 2012.09-63) 4.7.2"
+	.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-branch revision 211358]"

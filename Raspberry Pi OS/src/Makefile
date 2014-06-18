@@ -1,5 +1,8 @@
 TOOLCHAIN = arm-none-eabi
 
+# Optimal options for GCC according to eLinux.
+GCC_OPTIONS = -O0 -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
+
 BIN_DIR = ../bin/
 OBJ_DIR = ../obj/
 RES_DIR = ../res/
@@ -34,8 +37,8 @@ $(OBJ_DIR)%.o: $(SRC_DIR)%.s
 
 # Create object files from c files.
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-	$(TOOLCHAIN)-gcc -O0 -c $< -o $@
-	$(TOOLCHAIN)-gcc -S $< -o $(basename $@).list
+	$(TOOLCHAIN)-gcc $(GCC_OPTIONS) -c $< -o $@
+	$(TOOLCHAIN)-gcc $(GCC_OPTIONS) -S $< -o $(basename $@).list
 
 
 # Rule to make the listing file.
@@ -43,11 +46,8 @@ $(LIST): $(LINKED_ELF)
 	$(TOOLCHAIN)-objdump -d $(LINKED_ELF) > $(LIST)
 
 copy: $(TARGET)
-	cp $(TARGET) E:/
+	cp $(TARGET) G:/
 
-clean: 
-	-rm -f $(TARGET)
-	-rm -f $(LIST)
-	-rm -f $(MAP)
-	-rm -f $(OBJ_FILES)
-	-rm -f $(LINKED_ELF)
+clean:
+	-rm -f $(BIN_DIR)*
+	-rm -f $(OBJ_DIR)*

@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include <stdint.h>	// int32_t
+
 #define BYTES_PER_ROW 4
 
-char *byte_to_binary(const void *addr)
+char *byte_to_binary(const unsigned char byte)
 {
 	static char bits[9] = {'\0'};
-	unsigned char byte = *((unsigned char *)addr);
 
 	for (int i = 0; i < 8; ++i) {
 		bits[i] = ((byte >> i) & 1) + '0';
@@ -18,9 +19,9 @@ char *byte_to_binary(const void *addr)
 void bin_dump(const void *addr, size_t bytes)
 {
 	
-	// The buffer containing a char representation
+	// The buffer containing BYTES_PER_ROW chars per line
 	char buffer[BYTES_PER_ROW + 1];
-	const unsigned char *const ptr = (unsigned char *)addr;
+	const unsigned char *const ptr = addr;
 
 	// Loop untill we passed all bytes we wanted to print.
 	for (size_t i = 0; i < bytes;) {
@@ -33,7 +34,7 @@ void bin_dump(const void *addr, size_t bytes)
 
 			buffer[index] = (ptr[i] < 0x20 || ptr[i] > 0x7E) ? '.' : ptr[i];
 
-			printf("%s ", byte_to_binary(ptr + i));
+			printf("%s ", byte_to_binary(*ptr + i));
 
 		}
 
@@ -86,33 +87,31 @@ void hex_dump(const void *addr, size_t bytes)
 
 }
 
-int main(int argc, char **argv)
+int main(/*int argc, char **argv*/)
 {
-
-	struct rgba
-	{
-		char a,b,g,r;
-	};
 
 	union pixel
 	{
-		struct rgba rgba;
-		unsigned int value;
+		struct rgba
+		{
+			unsigned char a,b,g,r;
+		} c;
+		uint32_t rgba;
 	};
 
 	union pixel *myPixel = malloc(sizeof(*myPixel));
 
-	myPixel->rgba.r = 0x01;
-	myPixel->rgba.g = 0x02;
-	myPixel->rgba.b = 0x04;
-	myPixel->rgba.a = 0x08;
+	myPixel->c.r = 0x01;
+	myPixel->c.g = 0x02;
+	myPixel->c.b = 0x04;
+	myPixel->c.a = 0x08;
 
-	myPixel->value = 0x01020304;
+	myPixel->rgba = 0x01020408;
 
 	bin_dump(myPixel, sizeof(*myPixel));
 	hex_dump(myPixel, sizeof(*myPixel));
 
-	printf("%d\n", myPixel->rgba.r);
+	printf("%d\n", myPixel->c.r);
 
 	return 0;
 

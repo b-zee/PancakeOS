@@ -3,12 +3,12 @@ Discarded input sections
 
  .ARM.attributes
                 0x00000000       0x14 ../obj/boot.o
- .comment       0x00000000       0x31 ../obj/main.o
+ .comment       0x00000000       0x71 ../obj/main.o
  .ARM.attributes
-                0x00000000       0x30 ../obj/main.o
- .comment       0x00000000       0x31 ../obj/rpi_startup.o
+                0x00000000       0x35 ../obj/main.o
+ .comment       0x00000000       0x71 ../obj/rpi_startup.o
  .ARM.attributes
-                0x00000000       0x30 ../obj/rpi_startup.o
+                0x00000000       0x35 ../obj/rpi_startup.o
 
 Memory Configuration
 
@@ -33,20 +33,20 @@ LOAD ../obj/rpi_startup.o
  .data          0x0000800c        0x0 ../obj/main.o
  .data          0x0000800c        0x0 ../obj/rpi_startup.o
 
-.text           0x0000800c      0x130
+.text           0x0000800c      0x110
  *(.text)
  .text          0x0000800c        0x0 ../obj/boot.o
- .text          0x0000800c       0xd8 ../obj/main.o
+ .text          0x0000800c       0xbc ../obj/main.o
                 0x0000800c                main
- .text          0x000080e4       0x58 ../obj/rpi_startup.o
-                0x000080e4                _rpi_startup
-                0x0000813c                __bss_start = .
+ .text          0x000080c8       0x54 ../obj/rpi_startup.o
+                0x000080c8                _rpi_startup
+                0x0000811c                __bss_start = .
 
-.bss            0x0000813c        0x0
+.bss            0x0000811c        0x0
  *(.bss)
- .bss           0x0000813c        0x0 ../obj/boot.o
- .bss           0x0000813c        0x0 ../obj/main.o
- .bss           0x0000813c        0x0 ../obj/rpi_startup.o
+ .bss           0x0000811c        0x0 ../obj/boot.o
+ .bss           0x0000811c        0x0 ../obj/main.o
+ .bss           0x0000811c        0x0 ../obj/rpi_startup.o
                 0x00009000                . = ALIGN (0x1000)
                 0x00009000                __bss_end = .
 
