@@ -1,4 +1,4 @@
 PancakeOS
 ========
 
-My own little, dumb, own-made 'OS' for the Raspberry Pi.
+My own little, dumb, self-made 'OS' for the Raspberry Pi.
