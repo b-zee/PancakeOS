@@ -5,7 +5,7 @@ SECTIONS
 	. = 0x8000;
 	.init : { *(.init) }
 	.data : { *(.data) }
-	.text : { *(.text) }
+	.text : { *(.text.* .text) }
 	__bss_start = .;
 	.bss : { *(.bss) }
 	. = ALIGN(4096);

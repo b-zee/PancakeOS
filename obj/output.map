@@ -1,3 +1,6 @@
+Archive member included because of file (symbol)
+
+../lib/\libc.a(memset.o)      ../obj/rpi_startup.o (memset)
 
 Discarded input sections
 
@@ -9,6 +12,9 @@ Discarded input sections
  .comment       0x00000000       0x71 ../obj/rpi_startup.o
  .ARM.attributes
                 0x00000000       0x35 ../obj/rpi_startup.o
+ .comment       0x00000000       0x71 ../lib/\libc.a(memset.o)
+ .ARM.attributes
+                0x00000000       0x35 ../lib/\libc.a(memset.o)
 
 Memory Configuration
 
@@ -17,9 +23,6 @@ Name             Origin             Length             Attributes
 
 Linker script and memory map
 
-LOAD ../obj/bootstrap.o
-LOAD ../obj/main.o
-LOAD ../obj/rpi_startup.o
                 0x00008000                . = 0x8000
 
 .init           0x00008000        0xc
@@ -32,24 +35,33 @@ LOAD ../obj/rpi_startup.o
  .data          0x0000800c        0x0 ../obj/bootstrap.o
  .data          0x0000800c        0x0 ../obj/main.o
  .data          0x0000800c        0x0 ../obj/rpi_startup.o
+ .data          0x0000800c        0x0 ../lib/\libc.a(memset.o)
 
-.text           0x0000800c       0xf8
- *(.text)
+.text           0x0000800c       0xe4
+ *(.text.* .text)
  .text          0x0000800c        0x0 ../obj/bootstrap.o
- .text          0x0000800c       0xbc ../obj/main.o
+ .text          0x0000800c        0x0 ../obj/main.o
+ .text.startup  0x0000800c       0x88 ../obj/main.o
                 0x0000800c                main
- .text          0x000080c8       0x3c ../obj/rpi_startup.o
-                0x000080c8                _rpi_startup
-                0x00008104                __bss_start = .
+ .text          0x00008094       0x3c ../obj/rpi_startup.o
+                0x00008094                _rpi_startup
+ .text          0x000080d0       0x20 ../lib/\libc.a(memset.o)
+                0x000080d0                memset
+                0x000080f0                __bss_start = .
 
-.bss            0x00008104        0x0
+.bss            0x000080f0        0x0
  *(.bss)
- .bss           0x00008104        0x0 ../obj/bootstrap.o
- .bss           0x00008104        0x0 ../obj/main.o
- .bss           0x00008104        0x0 ../obj/rpi_startup.o
+ .bss           0x000080f0        0x0 ../obj/bootstrap.o
+ .bss           0x000080f0        0x0 ../obj/main.o
+ .bss           0x000080f0        0x0 ../obj/rpi_startup.o
+ .bss           0x000080f0        0x0 ../lib/\libc.a(memset.o)
                 0x00009000                . = ALIGN (0x1000)
                 0x00009000                __bss_end = .
 
 /DISCARD/
  *(*)
+LOAD ../obj/bootstrap.o
+LOAD ../obj/main.o
+LOAD ../obj/rpi_startup.o
+LOAD ../lib/\libc.a
 OUTPUT(../obj/output.elf elf32-littlearm)

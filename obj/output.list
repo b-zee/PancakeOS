@@ -1,0 +1,75 @@
+
+../obj/output.elf:     file format elf32-littlearm
+
+
+Disassembly of section .init:
+
+00008000 <_start>:
+    8000:	e3a0d302 	mov	sp, #134217728	; 0x8000000
+    8004:	e24dd004 	sub	sp, sp, #4
+    8008:	ea000021 	b	8094 <_rpi_startup>
+
+Disassembly of section .text:
+
+0000800c <main>:
+    800c:	e59f3078 	ldr	r3, [pc, #120]	; 808c <main+0x80>
+    8010:	e59f2078 	ldr	r2, [pc, #120]	; 8090 <main+0x84>
+    8014:	e5931004 	ldr	r1, [r3, #4]
+    8018:	e24dd008 	sub	sp, sp, #8
+    801c:	e3811701 	orr	r1, r1, #262144	; 0x40000
+    8020:	e5831004 	str	r1, [r3, #4]
+    8024:	e1a0c003 	mov	ip, r3
+    8028:	e3a00801 	mov	r0, #65536	; 0x10000
+    802c:	e3a01000 	mov	r1, #0
+    8030:	e58c001c 	str	r0, [ip, #28]
+    8034:	e58d1004 	str	r1, [sp, #4]
+    8038:	e59d3004 	ldr	r3, [sp, #4]
+    803c:	e1530002 	cmp	r3, r2
+    8040:	8a000005 	bhi	805c <main+0x50>
+    8044:	e59d3004 	ldr	r3, [sp, #4]
+    8048:	e2833001 	add	r3, r3, #1
+    804c:	e58d3004 	str	r3, [sp, #4]
+    8050:	e59d3004 	ldr	r3, [sp, #4]
+    8054:	e1530002 	cmp	r3, r2
+    8058:	9afffff9 	bls	8044 <main+0x38>
+    805c:	e58c0028 	str	r0, [ip, #40]	; 0x28
+    8060:	e58d1004 	str	r1, [sp, #4]
+    8064:	e59d3004 	ldr	r3, [sp, #4]
+    8068:	e1530002 	cmp	r3, r2
+    806c:	8affffef 	bhi	8030 <main+0x24>
+    8070:	e59d3004 	ldr	r3, [sp, #4]
+    8074:	e2833001 	add	r3, r3, #1
+    8078:	e58d3004 	str	r3, [sp, #4]
+    807c:	e59d3004 	ldr	r3, [sp, #4]
+    8080:	e1530002 	cmp	r3, r2
+    8084:	9afffff9 	bls	8070 <main+0x64>
+    8088:	eaffffe8 	b	8030 <main+0x24>
+    808c:	20200000 	.word	0x20200000
+    8090:	0007a11f 	.word	0x0007a11f
+
+00008094 <_rpi_startup>:
+    8094:	e92d4008 	push	{r3, lr}
+    8098:	e59f0028 	ldr	r0, [pc, #40]	; 80c8 <_rpi_startup+0x34>
+    809c:	e59f3028 	ldr	r3, [pc, #40]	; 80cc <_rpi_startup+0x38>
+    80a0:	e1500003 	cmp	r0, r3
+    80a4:	2a000005 	bcs	80c0 <_rpi_startup+0x2c>
+    80a8:	e1e02000 	mvn	r2, r0
+    80ac:	e0823003 	add	r3, r2, r3
+    80b0:	e3c32003 	bic	r2, r3, #3
+    80b4:	e2822004 	add	r2, r2, #4
+    80b8:	e3a01000 	mov	r1, #0
+    80bc:	eb000003 	bl	80d0 <memset>
+    80c0:	ebffffd1 	bl	800c <main>
+    80c4:	eafffffe 	b	80c4 <_rpi_startup+0x30>
+    80c8:	000080f0 	.word	0x000080f0
+    80cc:	00009000 	.word	0x00009000
+
+000080d0 <memset>:
+    80d0:	e3520000 	cmp	r2, #0
+    80d4:	e92d4010 	push	{r4, lr}
+    80d8:	e1a04000 	mov	r4, r0
+    80dc:	0a000001 	beq	80e8 <memset+0x18>
+    80e0:	e6ef1071 	uxtb	r1, r1
+    80e4:	ebfffff9 	bl	80d0 <memset>
+    80e8:	e1a00004 	mov	r0, r4
+    80ec:	e8bd8010 	pop	{r4, pc}
