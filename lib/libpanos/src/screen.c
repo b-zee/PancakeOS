@@ -1,5 +1,12 @@
 #include "screen.h"
 
+static void panos_mailbox_write_wait();
+static void panos_mailbox_read_wait();
+static void panos_mailbox_write(uint8_t channel, uint32_t data);
+static void panos_mailbox_read(uint8_t channel, uint32_t *data);
+
+#include "error.h"
+
 #define MAILBOX_ADDRESS		(unsigned int *)0x2000B880
 
 #define MAIL_READ_ADDRESS	MAILBOX_ADDRESS + 0x00
@@ -19,30 +26,35 @@ struct FRAME_BUFFER {
     volatile uint32_t size;
 };
 
-static struct FRAME_BUFFER panos_fb __attribute__ ((aligned (16))) = {0};
-
-void panos_screen()
+int panos_screen_initialize(uint16_t width, uint16_t height, uint8_t depth)
 {
-	panos_fb.width			= 640;
-	panos_fb.height			= 480;
-	panos_fb.virtual_width	= 640;
-	panos_fb.virtual_height	= 480;
+	static struct FRAME_BUFFER panos_fb __attribute__ ((aligned (16))) = {0};
+
+	panos_fb.width			= (uint32_t)width;
+	panos_fb.height			= (uint32_t)height;
+	panos_fb.virtual_width	= (uint32_t)width;
+	panos_fb.virtual_height	= (uint32_t)height;
     panos_fb.pitch			= 0;
-	panos_fb.depth			= 16;
+	panos_fb.depth			= (uint32_t)depth;
     panos_fb.x_offset		= 0;
     panos_fb.y_offset		= 0;
     panos_fb.pointer		= 0;
     panos_fb.size			= 0;
 
+	panos_mailbox_write(0x1, (uint32_t)&panos_fb);
 
-	do {
-		panos_mailbox_write((uint32_t)&panos_fb, 0x1);
-	} while (panos_mailbox_read(0x1) != 0);
+	uint32_t data;
+	panos_mailbox_read(0x1, &data);
 
-	while (panos_fb.pointer == 0);
+	if (data != 0) {
+		return PANOS_ERROR;
+	}
 
+	return PANOS_SUCCES;
 }
-/*void panos_mailbox_write_wait()
+
+// Static functions
+void panos_mailbox_write_wait()
 {
 	// Loop while MAIL_FULL
 	while ((*(MAIL_STATUS_ADDRESS) & 0x80000000) != 0);
@@ -51,22 +63,22 @@ void panos_mailbox_read_wait()
 {
 	// Loop while MAIL_EMPTY
 	while ((*(MAIL_STATUS_ADDRESS) & 0x40000000) != 0);
-}*/
+}
 
-/*void panos_mailbox_write(uint8_t channel, uint32_t data)
+void panos_mailbox_write(uint8_t channel, uint32_t data)
 {
 	panos_mailbox_write_wait();
 
-	*(MAIL_WRITE_ADDRESS)	= data | (uint32_t)channel;
+	*(MAIL_WRITE_ADDRESS) = (uint32_t)channel | data;
 }
-uint32_t panos_mailbox_read(uint8_t channel)
+
+void panos_mailbox_read(uint8_t channel, uint32_t *data)
 {
-	uint32_t frame;
 	do {
 		panos_mailbox_read_wait();
 
-		frame = *(MAIL_READ_ADDRESS);
-	} while ((frame & 0x0000000F) != (uint32_t)channel);
+		*data = *(MAIL_READ_ADDRESS);
+	} while ((*data & 0x0000000F) != (uint32_t)channel);
 
-	return frame & 0xFFFFFFF0;
-}*/
+	*data &= 0xFFFFFFF0;
+}

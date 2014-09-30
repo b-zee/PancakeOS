@@ -1,10 +1,8 @@
 Archive member included because of file (symbol)
 
-../lib/\libpanos.a(gpio.o)    ../obj/main.o (panos_set_pin_output)
-../lib/\libpanos.a(screen.o)  ../obj/main.o (panos_screen)
 ../lib/\libpanos.a(timer.o)   ../obj/main.o (panos_wait_us)
-../lib/\libpanos.a(mailbox.o)
-                              ../lib/\libpanos.a(screen.o) (panos_mailbox_read)
+../lib/\libpanos.a(gpio.o)    ../obj/main.o (panos_pin_function)
+../lib/\libpanos.a(screen.o)  ../obj/main.o (panos_screen_initialize)
 
 Discarded input sections
 
@@ -16,17 +14,15 @@ Discarded input sections
  .comment       0x00000000       0x71 ../obj/rpi_startup.o
  .ARM.attributes
                 0x00000000       0x35 ../obj/rpi_startup.o
+ .comment       0x00000000       0x71 ../lib/\libpanos.a(timer.o)
+ .ARM.attributes
+                0x00000000       0x35 ../lib/\libpanos.a(timer.o)
  .comment       0x00000000       0x71 ../lib/\libpanos.a(gpio.o)
  .ARM.attributes
                 0x00000000       0x35 ../lib/\libpanos.a(gpio.o)
  .comment       0x00000000       0x71 ../lib/\libpanos.a(screen.o)
  .ARM.attributes
                 0x00000000       0x35 ../lib/\libpanos.a(screen.o)
- .comment       0x00000000       0x71 ../lib/\libpanos.a(timer.o)
- .ARM.attributes
-                0x00000000       0x35 ../lib/\libpanos.a(timer.o)
- .ARM.attributes
-                0x00000000       0x14 ../lib/\libpanos.a(mailbox.o)
 
 Memory Configuration
 
@@ -47,41 +43,35 @@ Linker script and memory map
  .data          0x0000800c        0x0 ../obj/bootstrap.o
  .data          0x0000800c        0x0 ../obj/main.o
  .data          0x0000800c        0x0 ../obj/rpi_startup.o
+ .data          0x0000800c        0x0 ../lib/\libpanos.a(timer.o)
  .data          0x0000800c        0x0 ../lib/\libpanos.a(gpio.o)
  .data          0x0000800c        0x0 ../lib/\libpanos.a(screen.o)
- .data          0x0000800c        0x0 ../lib/\libpanos.a(timer.o)
- .data          0x0000800c        0x0 ../lib/\libpanos.a(mailbox.o)
 
-.text           0x0000800c      0x210
+.text           0x0000800c      0x1fc
  *(.text.* .text)
  .text          0x0000800c        0x0 ../obj/bootstrap.o
- .text          0x0000800c       0x44 ../obj/main.o
+ .text          0x0000800c       0x80 ../obj/main.o
                 0x0000800c                main
- .text          0x00008050       0x3c ../obj/rpi_startup.o
-                0x00008050                _rpi_startup
- .text          0x0000808c       0x80 ../lib/\libpanos.a(gpio.o)
-                0x0000808c                panos_set_pin_output
-                0x000080cc                panos_pin_set
-                0x000080ec                panos_pin_clear
- .text          0x0000810c       0x74 ../lib/\libpanos.a(screen.o)
-                0x0000810c                panos_screen
- .text          0x00008180       0x30 ../lib/\libpanos.a(timer.o)
-                0x00008180                panos_wait_us
- .text          0x000081b0       0x6c ../lib/\libpanos.a(mailbox.o)
-                0x000081b0                GetMailboxBase
-                0x000081b8                panos_mailbox_read
-                0x000081ec                panos_mailbox_write
-                0x0000821c                __bss_start = .
+ .text          0x0000808c       0x3c ../obj/rpi_startup.o
+                0x0000808c                _rpi_startup
+ .text          0x000080c8       0x30 ../lib/\libpanos.a(timer.o)
+                0x000080c8                panos_wait_us
+ .text          0x000080f8       0x84 ../lib/\libpanos.a(gpio.o)
+                0x000080f8                panos_pin_function
+                0x0000813c                panos_pin_set
+                0x0000815c                panos_pin_clear
+ .text          0x0000817c       0x8c ../lib/\libpanos.a(screen.o)
+                0x0000817c                panos_screen_initialize
+                0x00008208                __bss_start = .
 
-.bss            0x00008220       0x30
+.bss            0x00008210       0x30
  *(.bss)
- .bss           0x00008220        0x0 ../obj/bootstrap.o
- .bss           0x00008220        0x0 ../obj/main.o
- .bss           0x00008220        0x0 ../obj/rpi_startup.o
- .bss           0x00008220        0x0 ../lib/\libpanos.a(gpio.o)
- .bss           0x00008220       0x30 ../lib/\libpanos.a(screen.o)
- .bss           0x00008250        0x0 ../lib/\libpanos.a(timer.o)
- .bss           0x00008250        0x0 ../lib/\libpanos.a(mailbox.o)
+ .bss           0x00008210        0x0 ../obj/bootstrap.o
+ .bss           0x00008210        0x0 ../obj/main.o
+ .bss           0x00008210        0x0 ../obj/rpi_startup.o
+ .bss           0x00008210        0x0 ../lib/\libpanos.a(timer.o)
+ .bss           0x00008210        0x0 ../lib/\libpanos.a(gpio.o)
+ .bss           0x00008210       0x30 ../lib/\libpanos.a(screen.o)
                 0x00009000                . = ALIGN (0x1000)
                 0x00009000                __bss_end = .
 

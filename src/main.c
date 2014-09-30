@@ -5,22 +5,27 @@
 
 int main()
 {
-	panos_screen();
+	int ret_val;
+	ret_val = panos_screen_initialize(640, 480, 24);
 
-	// Set the function of pin 16 on 001, which means it's an output.
-	panos_set_pin_output(16);
-	// Set pin 16.
+	uint32_t interval;
+	if (ret_val == 0) {	// Success
+		interval = 100000;
+	} else {			// Failure
+		interval = 1000000;
+	}
+
+	panos_pin_function(16, FSEL_OUTPUT);
 	panos_pin_set(16);
 
-	// Endless loop to blink the led.
 	while (1) {
 		panos_pin_set(16);
 
-		panos_wait_us(500000);
+		panos_wait_us(interval);
 
 		panos_pin_clear(16);
 
-		panos_wait_us(500000);
+		panos_wait_us(interval);
 	}
 
 	return 0;
