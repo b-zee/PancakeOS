@@ -2,7 +2,6 @@
 
 void *memset(void *dst, int c, size_t n)
 {
-
 	unsigned char *ptr = dst;
 
 	while(n--) {
@@ -10,5 +9,4 @@ void *memset(void *dst, int c, size_t n)
 	}
 
 	return dst;
-
 }

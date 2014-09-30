@@ -1,0 +1,81 @@
+	.arch armv6zk
+	.eabi_attribute 27, 3
+	.eabi_attribute 28, 1
+	.fpu vfp
+	.eabi_attribute 20, 1
+	.eabi_attribute 21, 1
+	.eabi_attribute 23, 3
+	.eabi_attribute 24, 1
+	.eabi_attribute 25, 1
+	.eabi_attribute 26, 1
+	.eabi_attribute 30, 2
+	.eabi_attribute 34, 1
+	.eabi_attribute 18, 4
+	.file	"gpio.c"
+	.text
+	.align	2
+	.global	panos_set_pin_output
+	.type	panos_set_pin_output, %function
+panos_set_pin_output:
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	ldr	r3, .L2
+	umull	r2, r3, r3, r0
+	mov	r3, r3, lsr #3
+	mov	r2, r3, asl #2
+	add	r2, r2, #536870912
+	add	r3, r3, r3, asl #2
+	sub	r3, r0, r3, asl #1
+	add	r2, r2, #2097152
+	ldr	r1, [r2]
+	uxtb	r3, r3
+	add	r3, r3, r3, asl #1
+	mov	r0, #1
+	orr	r3, r1, r0, asl r3
+	str	r3, [r2]
+	bx	lr
+.L3:
+	.align	2
+.L2:
+	.word	-858993459
+	.size	panos_set_pin_output, .-panos_set_pin_output
+	.align	2
+	.global	panos_pin_set
+	.type	panos_pin_set, %function
+panos_pin_set:
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	and	r3, r0, #31
+	mov	r2, #1
+	mov	r2, r2, asl r3
+	ldr	r3, .L5
+	mov	r0, r0, lsr #5
+	str	r2, [r3, r0, asl #2]
+	bx	lr
+.L6:
+	.align	2
+.L5:
+	.word	538968092
+	.size	panos_pin_set, .-panos_pin_set
+	.align	2
+	.global	panos_pin_clear
+	.type	panos_pin_clear, %function
+panos_pin_clear:
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	and	r3, r0, #31
+	mov	r2, #1
+	mov	r2, r2, asl r3
+	ldr	r3, .L8
+	mov	r0, r0, lsr #5
+	str	r2, [r3, r0, asl #2]
+	bx	lr
+.L9:
+	.align	2
+.L8:
+	.word	538968104
+	.size	panos_pin_clear, .-panos_pin_clear
+	.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-branch revision 211358]"

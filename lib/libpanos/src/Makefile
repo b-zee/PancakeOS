@@ -4,11 +4,11 @@ TOOLCHAIN = arm-none-eabi
 C_OPTIONS	= -Wall -Wextra -Wpedantic -std=c99
 GCC_OPTIONS	= $(C_OPTIONS) -O3 -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
 
-OBJ_DIR	= obj/
-LIB_DIR	= ../
-SRC_DIR	= src/
+OBJ_DIR	= ../obj/
+LIB_DIR	= ../../
+SRC_DIR	= ./
 
-TARGET	:= $(LIB_DIR)libc.a
+TARGET	:= $(LIB_DIR)libpanos.a
 
 OBJ_FILES := $(patsubst $(SRC_DIR)%.s,$(OBJ_DIR)%.o,$(wildcard $(SRC_DIR)*.s))
 OBJ_FILES += $(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(wildcard $(SRC_DIR)*.c))
@@ -18,7 +18,7 @@ all: $(TARGET)
 rebuild: clean all
 
 $(TARGET): $(OBJ_FILES)
-	$(TOOLCHAIN)-ar rcs $@ -o $<
+	$(TOOLCHAIN)-ar rcs $@ -o $(OBJ_FILES)
 
 # Create object files from assembly files.
 $(OBJ_DIR)%.o: $(SRC_DIR)%.s

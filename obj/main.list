@@ -8,58 +8,37 @@
 	.eabi_attribute 24, 1
 	.eabi_attribute 25, 1
 	.eabi_attribute 26, 1
-	.eabi_attribute 30, 2
+	.eabi_attribute 30, 6
 	.eabi_attribute 34, 1
 	.eabi_attribute 18, 4
 	.file	"main.c"
-	.section	.text.startup,"ax",%progbits
+	.text
 	.align	2
 	.global	main
 	.type	main, %function
 main:
-	@ args = 0, pretend = 0, frame = 8
-	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	ldr	r3, .L11
-	ldr	r2, .L11+4
-	ldr	r1, [r3, #4]
-	sub	sp, sp, #8
-	orr	r1, r1, #262144
-	str	r1, [r3, #4]
-	mov	ip, r3
-	mov	r0, #65536
-	mov	r1, #0
-.L9:
-	str	r0, [ip, #28]
-	str	r1, [sp, #4]
-	ldr	r3, [sp, #4]
-	cmp	r3, r2
-	bhi	.L5
-.L6:
-	ldr	r3, [sp, #4]
-	add	r3, r3, #1
-	str	r3, [sp, #4]
-	ldr	r3, [sp, #4]
-	cmp	r3, r2
-	bls	.L6
-.L5:
-	str	r0, [ip, #40]
-	str	r1, [sp, #4]
-	ldr	r3, [sp, #4]
-	cmp	r3, r2
-	bhi	.L9
-.L8:
-	ldr	r3, [sp, #4]
-	add	r3, r3, #1
-	str	r3, [sp, #4]
-	ldr	r3, [sp, #4]
-	cmp	r3, r2
-	bls	.L8
-	b	.L9
-.L12:
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 1, uses_anonymous_args = 0
+	stmfd	sp!, {fp, lr}
+	add	fp, sp, #4
+	bl	panos_screen
+	mov	r0, #16
+	bl	panos_set_pin_output
+	mov	r0, #16
+	bl	panos_pin_set
+.L2:
+	mov	r0, #16
+	bl	panos_pin_set
+	ldr	r0, .L3
+	bl	panos_wait_us
+	mov	r0, #16
+	bl	panos_pin_clear
+	ldr	r0, .L3
+	bl	panos_wait_us
+	b	.L2
+.L4:
 	.align	2
-.L11:
-	.word	538968064
-	.word	499999
+.L3:
+	.word	500000
 	.size	main, .-main
 	.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-branch revision 211358]"

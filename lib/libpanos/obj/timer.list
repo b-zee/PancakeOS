@@ -1,0 +1,41 @@
+	.arch armv6zk
+	.eabi_attribute 27, 3
+	.eabi_attribute 28, 1
+	.fpu vfp
+	.eabi_attribute 20, 1
+	.eabi_attribute 21, 1
+	.eabi_attribute 23, 3
+	.eabi_attribute 24, 1
+	.eabi_attribute 25, 1
+	.eabi_attribute 26, 1
+	.eabi_attribute 30, 2
+	.eabi_attribute 34, 1
+	.eabi_attribute 18, 4
+	.file	"timer.c"
+	.text
+	.align	2
+	.global	panos_wait_us
+	.type	panos_wait_us, %function
+panos_wait_us:
+	@ args = 0, pretend = 0, frame = 8
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	ldr	r1, .L5
+	sub	sp, sp, #8
+	ldr	r3, [r1, #4]
+	str	r3, [sp, #4]
+.L3:
+	ldr	r2, [r1, #4]
+	ldr	r3, [sp, #4]
+	rsb	r3, r3, r2
+	cmp	r3, r0
+	bcc	.L3
+	add	sp, sp, #8
+	@ sp needed
+	bx	lr
+.L6:
+	.align	2
+.L5:
+	.word	536883200
+	.size	panos_wait_us, .-panos_wait_us
+	.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-branch revision 211358]"
