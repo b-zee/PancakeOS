@@ -19,57 +19,45 @@
 panos_screen_initialize:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	stmfd	sp!, {r4, r5}
-	ldr	r4, .L11
-	ldr	r3, .L11+4
-	ldr	r5, [r4, #2272]
-	mov	ip, #0
-	cmp	r5, ip
-	str	r0, [r3]
-	str	r1, [r3, #4]
-	str	r0, [r3, #8]
-	str	r1, [r3, #12]
-	str	ip, [r3, #16]
-	str	r2, [r3, #20]
-	str	ip, [r3, #24]
-	str	ip, [r3, #28]
-	str	ip, [r3, #32]
-	str	ip, [r3, #36]
-	bge	.L2
+	stmfd	sp!, {r4, lr}
+	ldr	r4, .L5
+	mov	r3, #0
+	mov	lr, r0
+	mov	ip, r1
+	orr	r0, r4, #1073741824
+	mov	r1, #1
+	str	lr, [r4]
+	str	ip, [r4, #4]
+	str	lr, [r4, #8]
+	str	ip, [r4, #12]
+	str	r3, [r4, #16]
+	str	r2, [r4, #20]
+	str	r3, [r4, #24]
+	str	r3, [r4, #28]
+	str	r3, [r4, #32]
+	str	r3, [r4, #36]
+	bl	panos_mailbox_write
+	mov	r0, #1
+	bl	panos_mailbox_read
+	cmp	r0, #0
+	bne	.L3
+	ldr	r0, [r4, #32]
+	rsbs	r0, r0, #1
+	movcc	r0, #0
+	ldmfd	sp!, {r4, pc}
 .L3:
-	b	.L3
-.L2:
-	ldr	r2, [r4, #2176]
-	orr	r3, r3, #1
-	tst	r5, #1073741824
-	str	r3, [r4, #2304]
-	and	r3, r2, #15
-	beq	.L10
-.L5:
-	b	.L5
-.L10:
-	cmp	r3, #1
-	beq	.L6
-.L7:
-	b	.L7
+	mov	r0, #1
+	ldmfd	sp!, {r4, pc}
 .L6:
-	bics	r3, r2, #15
-	moveq	r0, #0
-	movne	r0, #1
-	ldmfd	sp!, {r4, r5}
-	bx	lr
-.L12:
 	.align	2
-.L11:
-	.word	536915968
+.L5:
 	.word	.LANCHOR0
 	.size	panos_screen_initialize, .-panos_screen_initialize
 	.bss
 	.align	4
 	.set	.LANCHOR0,. + 0
-	.type	panos_fb.4004, %object
-	.size	panos_fb.4004, 40
-panos_fb.4004:
+	.type	panos_fb, %object
+	.size	panos_fb, 40
+panos_fb:
 	.space	40
 	.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-branch revision 211358]"
