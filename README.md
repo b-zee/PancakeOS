@@ -11,6 +11,6 @@ PancakeOS is an operating system that aims to provide a basic environment to com
 
 ### Libraries
 
-The most important library that plays a key role in this project is `libpanos`. This library provides an interface to the screen, GPIO pins, and possibly more.
+The most important library that plays a key role in this project is `libpanos`(library PancakeOS). This library provides an interface to the screen, GPIO pins, and possibly more.
 
 A library that's also available, but not needed at the moment, is the `libc`. It should be updated when the project progresses and more and more system calls are made available. I.e. `memset`, `strlen`, etc.
