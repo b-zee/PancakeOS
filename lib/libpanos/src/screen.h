@@ -12,5 +12,6 @@
 #include <stdint.h>
 
 int panos_screen_initialize(uint16_t width, uint16_t height, uint8_t depth);
+uint8_t *panos_screen_framebuffer();
 
 #endif

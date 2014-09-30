@@ -5,175 +5,187 @@
 Disassembly of section .init:
 
 00008000 <_start>:
-	8000:	e3a0d302 	mov	sp, #134217728	; 0x8000000
-	8004:	e24dd004 	sub	sp, sp, #4
-	8008:	ea00001f 	b	808c <_rpi_startup>
+    8000:	e3a0d302 	mov	sp, #134217728	; 0x8000000
+    8004:	e24dd004 	sub	sp, sp, #4
+    8008:	ea00003d 	b	8104 <_rpi_startup>
 
 Disassembly of section .text:
 
 0000800c <main>:
-	800c:	e92d4800 	push	{fp, lr}
-	8010:	e28db004 	add	fp, sp, #4
-	8014:	e24dd008 	sub	sp, sp, #8
-	8018:	e3a00d0a 	mov	r0, #640	; 0x280
-	801c:	e3a01e1e 	mov	r1, #480	; 0x1e0
-	8020:	e3a02018 	mov	r2, #24
-	8024:	eb000048 	bl	814c <panos_screen_initialize>
-	8028:	e50b000c 	str	r0, [fp, #-12]
-	802c:	e51b300c 	ldr	r3, [fp, #-12]
-	8030:	e3530000 	cmp	r3, #0
-	8034:	1a000002 	bne	8044 <main+0x38>
-	8038:	e59f3044 	ldr	r3, [pc, #68]	; 8084 <main+0x78>
-	803c:	e50b3008 	str	r3, [fp, #-8]
-	8040:	ea000001 	b	804c <main+0x40>
-	8044:	e59f303c 	ldr	r3, [pc, #60]	; 8088 <main+0x7c>
-	8048:	e50b3008 	str	r3, [fp, #-8]
-	804c:	e3a00010 	mov	r0, #16
-	8050:	e3a01001 	mov	r1, #1
-	8054:	eb00001b 	bl	80c8 <panos_pin_function>
-	8058:	e3a00010 	mov	r0, #16
-	805c:	eb00002a 	bl	810c <panos_pin_set>
-	8060:	e3a00010 	mov	r0, #16
-	8064:	eb000028 	bl	810c <panos_pin_set>
-	8068:	e51b0008 	ldr	r0, [fp, #-8]
-	806c:	eb00004e 	bl	81ac <panos_wait_us>
-	8070:	e3a00010 	mov	r0, #16
-	8074:	eb00002c 	bl	812c <panos_pin_clear>
-	8078:	e51b0008 	ldr	r0, [fp, #-8]
-	807c:	eb00004a 	bl	81ac <panos_wait_us>
-	8080:	eafffff6 	b	8060 <main+0x54>
-	8084:	000186a0 	.word	0x000186a0
-	8088:	000f4240 	.word	0x000f4240
+    800c:	e92d4800 	push	{fp, lr}
+    8010:	e28db004 	add	fp, sp, #4
+    8014:	e24dd010 	sub	sp, sp, #16
+    8018:	e3a00d0a 	mov	r0, #640	; 0x280
+    801c:	e3a01e1e 	mov	r1, #480	; 0x1e0
+    8020:	e3a02018 	mov	r2, #24
+    8024:	eb000066 	bl	81c4 <panos_screen_initialize>
+    8028:	e50b0010 	str	r0, [fp, #-16]
+    802c:	e51b3010 	ldr	r3, [fp, #-16]
+    8030:	e3530000 	cmp	r3, #0
+    8034:	1a000020 	bne	80bc <main+0xb0>
+    8038:	e59f30bc 	ldr	r3, [pc, #188]	; 80fc <main+0xf0>
+    803c:	e50b3008 	str	r3, [fp, #-8]
+    8040:	eb000084 	bl	8258 <panos_screen_framebuffer>
+    8044:	e50b0014 	str	r0, [fp, #-20]
+    8048:	e3a03000 	mov	r3, #0
+    804c:	e14b30ba 	strh	r3, [fp, #-10]
+    8050:	ea000015 	b	80ac <main+0xa0>
+    8054:	e3a03000 	mov	r3, #0
+    8058:	e14b30bc 	strh	r3, [fp, #-12]
+    805c:	ea00000c 	b	8094 <main+0x88>
+    8060:	e15b30bc 	ldrh	r3, [fp, #-12]
+    8064:	e15b20ba 	ldrh	r2, [fp, #-10]
+    8068:	e0020392 	mul	r2, r2, r3
+    806c:	e1a03002 	mov	r3, r2
+    8070:	e1a03083 	lsl	r3, r3, #1
+    8074:	e0833002 	add	r3, r3, r2
+    8078:	e51b2014 	ldr	r2, [fp, #-20]
+    807c:	e0823003 	add	r3, r2, r3
+    8080:	e3e02000 	mvn	r2, #0
+    8084:	e5c32000 	strb	r2, [r3]
+    8088:	e15b30bc 	ldrh	r3, [fp, #-12]
+    808c:	e2833001 	add	r3, r3, #1
+    8090:	e14b30bc 	strh	r3, [fp, #-12]
+    8094:	e15b30bc 	ldrh	r3, [fp, #-12]
+    8098:	e3530e1e 	cmp	r3, #480	; 0x1e0
+    809c:	3affffef 	bcc	8060 <main+0x54>
+    80a0:	e15b30ba 	ldrh	r3, [fp, #-10]
+    80a4:	e2833001 	add	r3, r3, #1
+    80a8:	e14b30ba 	strh	r3, [fp, #-10]
+    80ac:	e15b30ba 	ldrh	r3, [fp, #-10]
+    80b0:	e3530d0a 	cmp	r3, #640	; 0x280
+    80b4:	3affffe6 	bcc	8054 <main+0x48>
+    80b8:	ea000001 	b	80c4 <main+0xb8>
+    80bc:	e59f303c 	ldr	r3, [pc, #60]	; 8100 <main+0xf4>
+    80c0:	e50b3008 	str	r3, [fp, #-8]
+    80c4:	e3a00010 	mov	r0, #16
+    80c8:	e3a01001 	mov	r1, #1
+    80cc:	eb00001b 	bl	8140 <panos_pin_function>
+    80d0:	e3a00010 	mov	r0, #16
+    80d4:	eb00002a 	bl	8184 <panos_pin_set>
+    80d8:	e3a00010 	mov	r0, #16
+    80dc:	eb000028 	bl	8184 <panos_pin_set>
+    80e0:	e51b0008 	ldr	r0, [fp, #-8]
+    80e4:	eb00005f 	bl	8268 <panos_wait_us>
+    80e8:	e3a00010 	mov	r0, #16
+    80ec:	eb00002c 	bl	81a4 <panos_pin_clear>
+    80f0:	e51b0008 	ldr	r0, [fp, #-8]
+    80f4:	eb00005b 	bl	8268 <panos_wait_us>
+    80f8:	eafffff6 	b	80d8 <main+0xcc>
+    80fc:	000186a0 	.word	0x000186a0
+    8100:	000f4240 	.word	0x000f4240
 
-0000808c <_rpi_startup>:
-	808c:	e92d4830 	push	{r4, r5, fp, lr}
-	8090:	e28db00c 	add	fp, sp, #12
-	8094:	e59f4024 	ldr	r4, [pc, #36]	; 80c0 <_rpi_startup+0x34>
-	8098:	e59f5024 	ldr	r5, [pc, #36]	; 80c4 <_rpi_startup+0x38>
-	809c:	ea000003 	b	80b0 <_rpi_startup+0x24>
-	80a0:	e1a03004 	mov	r3, r4
-	80a4:	e2834004 	add	r4, r3, #4
-	80a8:	e3a02000 	mov	r2, #0
-	80ac:	e5832000 	str	r2, [r3]
-	80b0:	e1540005 	cmp	r4, r5
-	80b4:	3afffff9 	bcc	80a0 <_rpi_startup+0x14>
-	80b8:	ebffffd3 	bl	800c <main>
-	80bc:	eafffffe 	b	80bc <_rpi_startup+0x30>
-	80c0:	00008248 	.word	0x00008248
-	80c4:	00009000 	.word	0x00009000
+00008104 <_rpi_startup>:
+    8104:	e92d4830 	push	{r4, r5, fp, lr}
+    8108:	e28db00c 	add	fp, sp, #12
+    810c:	e59f4024 	ldr	r4, [pc, #36]	; 8138 <_rpi_startup+0x34>
+    8110:	e59f5024 	ldr	r5, [pc, #36]	; 813c <_rpi_startup+0x38>
+    8114:	ea000003 	b	8128 <_rpi_startup+0x24>
+    8118:	e1a03004 	mov	r3, r4
+    811c:	e2834004 	add	r4, r3, #4
+    8120:	e3a02000 	mov	r2, #0
+    8124:	e5832000 	str	r2, [r3]
+    8128:	e1540005 	cmp	r4, r5
+    812c:	3afffff9 	bcc	8118 <_rpi_startup+0x14>
+    8130:	ebffffb5 	bl	800c <main>
+    8134:	eafffffe 	b	8134 <_rpi_startup+0x30>
+    8138:	00008298 	.word	0x00008298
+    813c:	00009000 	.word	0x00009000
 
-000080c8 <panos_pin_function>:
-	80c8:	e59f3038 	ldr	r3, [pc, #56]	; 8108 <panos_pin_function+0x40>
-	80cc:	e3a0c007 	mov	ip, #7
-	80d0:	e0832093 	umull	r2, r3, r3, r0
-	80d4:	e1a031a3 	lsr	r3, r3, #3
-	80d8:	e1a02103 	lsl	r2, r3, #2
-	80dc:	e2822202 	add	r2, r2, #536870912	; 0x20000000
-	80e0:	e0833103 	add	r3, r3, r3, lsl #2
-	80e4:	e0403083 	sub	r3, r0, r3, lsl #1
-	80e8:	e2822602 	add	r2, r2, #2097152	; 0x200000
-	80ec:	e5920000 	ldr	r0, [r2]
-	80f0:	e6ef3073 	uxtb	r3, r3
-	80f4:	e0833083 	add	r3, r3, r3, lsl #1
-	80f8:	e000031c 	and	r0, r0, ip, lsl r3
-	80fc:	e1801311 	orr	r1, r0, r1, lsl r3
-	8100:	e5821000 	str	r1, [r2]
-	8104:	e12fff1e 	bx	lr
-	8108:	cccccccd 	.word	0xcccccccd
+00008140 <panos_pin_function>:
+    8140:	e59f3038 	ldr	r3, [pc, #56]	; 8180 <panos_pin_function+0x40>
+    8144:	e3a0c007 	mov	ip, #7
+    8148:	e0832093 	umull	r2, r3, r3, r0
+    814c:	e1a031a3 	lsr	r3, r3, #3
+    8150:	e1a02103 	lsl	r2, r3, #2
+    8154:	e2822202 	add	r2, r2, #536870912	; 0x20000000
+    8158:	e0833103 	add	r3, r3, r3, lsl #2
+    815c:	e0403083 	sub	r3, r0, r3, lsl #1
+    8160:	e2822602 	add	r2, r2, #2097152	; 0x200000
+    8164:	e5920000 	ldr	r0, [r2]
+    8168:	e6ef3073 	uxtb	r3, r3
+    816c:	e0833083 	add	r3, r3, r3, lsl #1
+    8170:	e000031c 	and	r0, r0, ip, lsl r3
+    8174:	e1801311 	orr	r1, r0, r1, lsl r3
+    8178:	e5821000 	str	r1, [r2]
+    817c:	e12fff1e 	bx	lr
+    8180:	cccccccd 	.word	0xcccccccd
 
-0000810c <panos_pin_set>:
-	810c:	e200301f 	and	r3, r0, #31
-	8110:	e3a02001 	mov	r2, #1
-	8114:	e1a02312 	lsl	r2, r2, r3
-	8118:	e59f3008 	ldr	r3, [pc, #8]	; 8128 <panos_pin_set+0x1c>
-	811c:	e1a002a0 	lsr	r0, r0, #5
-	8120:	e7832100 	str	r2, [r3, r0, lsl #2]
-	8124:	e12fff1e 	bx	lr
-	8128:	2020001c 	.word	0x2020001c
+00008184 <panos_pin_set>:
+    8184:	e200301f 	and	r3, r0, #31
+    8188:	e3a02001 	mov	r2, #1
+    818c:	e1a02312 	lsl	r2, r2, r3
+    8190:	e59f3008 	ldr	r3, [pc, #8]	; 81a0 <panos_pin_set+0x1c>
+    8194:	e1a002a0 	lsr	r0, r0, #5
+    8198:	e7832100 	str	r2, [r3, r0, lsl #2]
+    819c:	e12fff1e 	bx	lr
+    81a0:	2020001c 	.word	0x2020001c
 
-0000812c <panos_pin_clear>:
-	812c:	e200301f 	and	r3, r0, #31
-	8130:	e3a02001 	mov	r2, #1
-	8134:	e1a02312 	lsl	r2, r2, r3
-	8138:	e59f3008 	ldr	r3, [pc, #8]	; 8148 <panos_pin_clear+0x1c>
-	813c:	e1a002a0 	lsr	r0, r0, #5
-	8140:	e7832100 	str	r2, [r3, r0, lsl #2]
-	8144:	e12fff1e 	bx	lr
-	8148:	20200028 	.word	0x20200028
+000081a4 <panos_pin_clear>:
+    81a4:	e200301f 	and	r3, r0, #31
+    81a8:	e3a02001 	mov	r2, #1
+    81ac:	e1a02312 	lsl	r2, r2, r3
+    81b0:	e59f3008 	ldr	r3, [pc, #8]	; 81c0 <panos_pin_clear+0x1c>
+    81b4:	e1a002a0 	lsr	r0, r0, #5
+    81b8:	e7832100 	str	r2, [r3, r0, lsl #2]
+    81bc:	e12fff1e 	bx	lr
+    81c0:	20200028 	.word	0x20200028
 
-0000814c <panos_screen_initialize>:
-	814c:	e59f3054 	ldr	r3, [pc, #84]	; 81a8 <panos_screen_initialize+0x5c>
-	8150:	e92d4010 	push	{r4, lr}
-	8154:	e3a0c000 	mov	ip, #0
-	8158:	e1a0e001 	mov	lr, r1
-	815c:	e1a04000 	mov	r4, r0
-	8160:	e3a01001 	mov	r1, #1
-	8164:	e3830101 	orr	r0, r3, #1073741824	; 0x40000000
-	8168:	e5834000 	str	r4, [r3]
-	816c:	e583e004 	str	lr, [r3, #4]
-	8170:	e5834008 	str	r4, [r3, #8]
-	8174:	e583e00c 	str	lr, [r3, #12]
-	8178:	e583c010 	str	ip, [r3, #16]
-	817c:	e5832014 	str	r2, [r3, #20]
-	8180:	e583c018 	str	ip, [r3, #24]
-	8184:	e583c01c 	str	ip, [r3, #28]
-	8188:	e583c020 	str	ip, [r3, #32]
-	818c:	e583c024 	str	ip, [r3, #36]	; 0x24
-	8190:	eb000020 	bl	8218 <panos_mailbox_write>
-	8194:	e3a00001 	mov	r0, #1
-	8198:	eb000011 	bl	81e4 <panos_mailbox_read>
-	819c:	e2900000 	adds	r0, r0, #0
-	81a0:	13a00001 	movne	r0, #1
-	81a4:	e8bd8010 	pop	{r4, pc}
-	81a8:	00008250 	.word	0x00008250
+000081c4 <panos_screen_initialize>:
+    81c4:	e59fc084 	ldr	ip, [pc, #132]	; 8250 <panos_screen_initialize+0x8c>
+    81c8:	e3a03000 	mov	r3, #0
+    81cc:	e92d0030 	push	{r4, r5}
+    81d0:	e59f407c 	ldr	r4, [pc, #124]	; 8254 <panos_screen_initialize+0x90>
+    81d4:	e58c0000 	str	r0, [ip]
+    81d8:	e38c5101 	orr	r5, ip, #1073741824	; 0x40000000
+    81dc:	e58c1004 	str	r1, [ip, #4]
+    81e0:	e58c0008 	str	r0, [ip, #8]
+    81e4:	e58c100c 	str	r1, [ip, #12]
+    81e8:	e58c3010 	str	r3, [ip, #16]
+    81ec:	e58c2014 	str	r2, [ip, #20]
+    81f0:	e58c3018 	str	r3, [ip, #24]
+    81f4:	e58c301c 	str	r3, [ip, #28]
+    81f8:	e58c3020 	str	r3, [ip, #32]
+    81fc:	e58c3024 	str	r3, [ip, #36]	; 0x24
+    8200:	e5943898 	ldr	r3, [r4, #2200]	; 0x898
+    8204:	e59f2048 	ldr	r2, [pc, #72]	; 8254 <panos_screen_initialize+0x90>
+    8208:	e3530000 	cmp	r3, #0
+    820c:	bafffffb 	blt	8200 <panos_screen_initialize+0x3c>
+    8210:	e2853001 	add	r3, r5, #1
+    8214:	e58238a0 	str	r3, [r2, #2208]	; 0x8a0
+    8218:	e5923898 	ldr	r3, [r2, #2200]	; 0x898
+    821c:	e3130101 	tst	r3, #1073741824	; 0x40000000
+    8220:	1afffffc 	bne	8218 <panos_screen_initialize+0x54>
+    8224:	e5923880 	ldr	r3, [r2, #2176]	; 0x880
+    8228:	e203000f 	and	r0, r3, #15
+    822c:	e3500001 	cmp	r0, #1
+    8230:	1afffff8 	bne	8218 <panos_screen_initialize+0x54>
+    8234:	e3d3200f 	bics	r2, r3, #15
+    8238:	1a000002 	bne	8248 <panos_screen_initialize+0x84>
+    823c:	e59c0020 	ldr	r0, [ip, #32]
+    8240:	e2700001 	rsbs	r0, r0, #1
+    8244:	33a00000 	movcc	r0, #0
+    8248:	e8bd0030 	pop	{r4, r5}
+    824c:	e12fff1e 	bx	lr
+    8250:	000082a0 	.word	0x000082a0
+    8254:	2000b000 	.word	0x2000b000
 
-000081ac <panos_wait_us>:
-	81ac:	e59f1024 	ldr	r1, [pc, #36]	; 81d8 <panos_wait_us+0x2c>
-	81b0:	e24dd008 	sub	sp, sp, #8
-	81b4:	e5913004 	ldr	r3, [r1, #4]
-	81b8:	e58d3004 	str	r3, [sp, #4]
-	81bc:	e5912004 	ldr	r2, [r1, #4]
-	81c0:	e59d3004 	ldr	r3, [sp, #4]
-	81c4:	e0633002 	rsb	r3, r3, r2
-	81c8:	e1530000 	cmp	r3, r0
-	81cc:	3afffffa 	bcc	81bc <panos_wait_us+0x10>
-	81d0:	e28dd008 	add	sp, sp, #8
-	81d4:	e12fff1e 	bx	lr
-	81d8:	20003000 	.word	0x20003000
+00008258 <panos_screen_framebuffer>:
+    8258:	e59f3004 	ldr	r3, [pc, #4]	; 8264 <panos_screen_framebuffer+0xc>
+    825c:	e5930020 	ldr	r0, [r3, #32]
+    8260:	e12fff1e 	bx	lr
+    8264:	000082a0 	.word	0x000082a0
 
-000081dc <GetMailboxBase>:
-	81dc:	e59f0060 	ldr	r0, [pc, #96]	; 8244 <wait2$+0x14>
-	81e0:	e1a0f00e 	mov	pc, lr
-
-000081e4 <panos_mailbox_read>:
-	81e4:	e200300f 	and	r3, r0, #15
-	81e8:	e1a0200e 	mov	r2, lr
-	81ec:	ebfffffa 	bl	81dc <GetMailboxBase>
-	81f0:	e1a0e002 	mov	lr, r2
-
-000081f4 <rightmail$>:
-	81f4:	e5902018 	ldr	r2, [r0, #24]
-	81f8:	e3120101 	tst	r2, #1073741824	; 0x40000000
-	81fc:	1afffffc 	bne	81f4 <rightmail$>
-	8200:	e5901000 	ldr	r1, [r0]
-	8204:	e201200f 	and	r2, r1, #15
-	8208:	e1320003 	teq	r2, r3
-	820c:	1afffff8 	bne	81f4 <rightmail$>
-	8210:	e3c1000f 	bic	r0, r1, #15
-	8214:	e1a0f00e 	mov	pc, lr
-
-00008218 <panos_mailbox_write>:
-	8218:	e201200f 	and	r2, r1, #15
-	821c:	e3c0100f 	bic	r1, r0, #15
-	8220:	e1811002 	orr	r1, r1, r2
-	8224:	e1a0200e 	mov	r2, lr
-	8228:	ebffffeb 	bl	81dc <GetMailboxBase>
-	822c:	e1a0e002 	mov	lr, r2
-
-00008230 <wait2$>:
-	8230:	e5902018 	ldr	r2, [r0, #24]
-	8234:	e3120102 	tst	r2, #-2147483648	; 0x80000000
-	8238:	1afffffc 	bne	8230 <wait2$>
-	823c:	e5801020 	str	r1, [r0, #32]
-	8240:	e1a0f00e 	mov	pc, lr
-	8244:	2000b880 	.word	0x2000b880
+00008268 <panos_wait_us>:
+    8268:	e59f1024 	ldr	r1, [pc, #36]	; 8294 <panos_wait_us+0x2c>
+    826c:	e24dd008 	sub	sp, sp, #8
+    8270:	e5913004 	ldr	r3, [r1, #4]
+    8274:	e58d3004 	str	r3, [sp, #4]
+    8278:	e5912004 	ldr	r2, [r1, #4]
+    827c:	e59d3004 	ldr	r3, [sp, #4]
+    8280:	e0633002 	rsb	r3, r3, r2
+    8284:	e1530000 	cmp	r3, r0
+    8288:	3afffffa 	bcc	8278 <panos_wait_us+0x10>
+    828c:	e28dd008 	add	sp, sp, #8
+    8290:	e12fff1e 	bx	lr
+    8294:	20003000 	.word	0x20003000

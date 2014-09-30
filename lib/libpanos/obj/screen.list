@@ -20,54 +20,65 @@ panos_screen_initialize:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
 	@ link register save eliminated.
-	stmfd	sp!, {r4, r5, r6, r7}
-	ldr	r5, .L13
-	ldr	r3, .L13+4
-	ldr	r4, [r5, #2176]
-	mov	ip, #0
-	adds	r6, r4, #24
-	str	r0, [r3]
-	orr	r7, r3, #1073741824
-	str	r1, [r3, #4]
-	str	r0, [r3, #8]
-	str	r1, [r3, #12]
-	str	ip, [r3, #16]
-	str	r2, [r3, #20]
-	str	ip, [r3, #24]
-	str	ip, [r3, #28]
-	str	ip, [r3, #32]
-	str	ip, [r3, #36]
-	bpl	.L2
+	ldr	ip, .L9
+	mov	r3, #0
+	stmfd	sp!, {r4, r5}
+	ldr	r4, .L9+4
+	str	r0, [ip]
+	orr	r5, ip, #1073741824
+	str	r1, [ip, #4]
+	str	r0, [ip, #8]
+	str	r1, [ip, #12]
+	str	r3, [ip, #16]
+	str	r2, [ip, #20]
+	str	r3, [ip, #24]
+	str	r3, [ip, #28]
+	str	r3, [ip, #32]
+	str	r3, [ip, #36]
 .L3:
-	b	.L3
-.L2:
-	add	r2, r7, #1
-	tst	r6, #1073741824
-	str	r2, [r5, #2304]
-	and	r0, r4, #15
-	beq	.L12
-.L5:
-	b	.L5
-.L12:
+	ldr	r3, [r4, #2200]
+	ldr	r2, .L9+4
+	cmp	r3, #0
+	blt	.L3
+	add	r3, r5, #1
+	str	r3, [r2, #2208]
+.L4:
+	ldr	r3, [r2, #2200]
+	tst	r3, #1073741824
+	bne	.L4
+	ldr	r3, [r2, #2176]
+	and	r0, r3, #15
 	cmp	r0, #1
-	beq	.L6
-.L7:
-	b	.L7
-.L6:
-	bics	r2, r4, #15
-	bne	.L9
-	ldr	r0, [r3, #32]
+	bne	.L4
+	bics	r2, r3, #15
+	bne	.L6
+	ldr	r0, [ip, #32]
 	rsbs	r0, r0, #1
 	movcc	r0, #0
-.L9:
-	ldmfd	sp!, {r4, r5, r6, r7}
+.L6:
+	ldmfd	sp!, {r4, r5}
 	bx	lr
-.L14:
+.L10:
 	.align	2
-.L13:
-	.word	536915968
+.L9:
 	.word	.LANCHOR0
+	.word	536915968
 	.size	panos_screen_initialize, .-panos_screen_initialize
+	.align	2
+	.global	panos_screen_framebuffer
+	.type	panos_screen_framebuffer, %function
+panos_screen_framebuffer:
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 0, uses_anonymous_args = 0
+	@ link register save eliminated.
+	ldr	r3, .L12
+	ldr	r0, [r3, #32]
+	bx	lr
+.L13:
+	.align	2
+.L12:
+	.word	.LANCHOR0
+	.size	panos_screen_framebuffer, .-panos_screen_framebuffer
 	.bss
 	.align	4
 	.set	.LANCHOR0,. + 0
