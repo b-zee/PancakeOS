@@ -1,0 +1,1 @@
+This folder will contain binary files that have been produced by the toolchain. Primarily `kernel.img`, which is the result of this project.
