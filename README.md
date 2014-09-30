@@ -1,15 +1,15 @@
-# PancakeOS
+# PancakeOS #
 
-## Brief description
+## Brief description ##
 
-PancakeOS is an operating system that aims to provide a basic environment to communicate with components in the Raspberry Pi like the screen and GPIO pins.
+PancakeOS is an operating system that aims to provide a basic environment to communicate with components in the [Raspberry Pi](//raspberrypi.org) like the screen and GPIO pins.
 
 
-## Structure
+## Structure ##
 
 `src/` contains the basic startup code to launch a `main` function in `main.c`. This `main` is similar to any entry point in C. `main.c` is able to invoke functions of libraries that are made to communicate with the GPIO pins and screen.
 
-### Libraries
+### Libraries ###
 
 The most important library that plays a key role in this project is `libpanos`(library PancakeOS). This library provides an interface to the screen, GPIO pins, and possibly more.
 
