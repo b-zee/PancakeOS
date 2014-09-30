@@ -2,11 +2,11 @@
 #define PANOS_TIMER_H
 
 /**
- * @author		Benno Zeeman
- * @brief		Functions to time
- * @copyright	The MIT License (MIT)
- * @date		2014
- * @version		1.0
+ * @author      Benno Zeeman
+ * @brief       Functions to time
+ * @copyright   The MIT License (MIT)
+ * @date        2014
+ * @version     1.0
  */
 
 #include <stdint.h>
