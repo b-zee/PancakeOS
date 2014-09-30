@@ -19,38 +19,53 @@
 panos_screen_initialize:
 	@ args = 0, pretend = 0, frame = 0
 	@ frame_needed = 0, uses_anonymous_args = 0
-	stmfd	sp!, {r4, lr}
-	ldr	r4, .L5
-	mov	r3, #0
-	mov	lr, r0
-	mov	ip, r1
-	orr	r0, r4, #1073741824
-	mov	r1, #1
-	str	lr, [r4]
-	str	ip, [r4, #4]
-	str	lr, [r4, #8]
-	str	ip, [r4, #12]
-	str	r3, [r4, #16]
-	str	r2, [r4, #20]
-	str	r3, [r4, #24]
-	str	r3, [r4, #28]
-	str	r3, [r4, #32]
-	str	r3, [r4, #36]
-	bl	panos_mailbox_write
-	mov	r0, #1
-	bl	panos_mailbox_read
-	cmp	r0, #0
-	bne	.L3
-	ldr	r0, [r4, #32]
+	@ link register save eliminated.
+	stmfd	sp!, {r4, r5, r6, r7}
+	ldr	r5, .L13
+	ldr	r3, .L13+4
+	ldr	r4, [r5, #2176]
+	mov	ip, #0
+	adds	r6, r4, #24
+	str	r0, [r3]
+	orr	r7, r3, #1073741824
+	str	r1, [r3, #4]
+	str	r0, [r3, #8]
+	str	r1, [r3, #12]
+	str	ip, [r3, #16]
+	str	r2, [r3, #20]
+	str	ip, [r3, #24]
+	str	ip, [r3, #28]
+	str	ip, [r3, #32]
+	str	ip, [r3, #36]
+	bpl	.L2
+.L3:
+	b	.L3
+.L2:
+	add	r2, r7, #1
+	tst	r6, #1073741824
+	str	r2, [r5, #2304]
+	and	r0, r4, #15
+	beq	.L12
+.L5:
+	b	.L5
+.L12:
+	cmp	r0, #1
+	beq	.L6
+.L7:
+	b	.L7
+.L6:
+	bics	r2, r4, #15
+	bne	.L9
+	ldr	r0, [r3, #32]
 	rsbs	r0, r0, #1
 	movcc	r0, #0
-	ldmfd	sp!, {r4, pc}
-.L3:
-	mov	r0, #1
-	ldmfd	sp!, {r4, pc}
-.L6:
+.L9:
+	ldmfd	sp!, {r4, r5, r6, r7}
+	bx	lr
+.L14:
 	.align	2
-.L5:
+.L13:
+	.word	536915968
 	.word	.LANCHOR0
 	.size	panos_screen_initialize, .-panos_screen_initialize
 	.bss

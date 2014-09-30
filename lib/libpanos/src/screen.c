@@ -1,15 +1,15 @@
 #include "screen.h"
 #include "error.h"
 
-//void panos_mailbox_write_wait();
-//void panos_mailbox_read_wait();
-void panos_mailbox_write(uint32_t data, uint8_t channel);
-uint32_t panos_mailbox_read(uint8_t channel);
-
 #define MAIL_ADDRESS		(unsigned int *)0x2000B880
 #define MAIL_READ_ADDRESS	MAIL_ADDRESS + 0x00
 #define MAIL_STATUS_ADDRESS	MAIL_ADDRESS + 0x18
 #define MAIL_WRITE_ADDRESS	MAIL_ADDRESS + 0x20
+
+static void panos_mailbox_wait_write();
+static void panos_mailbox_wait_read();
+static void panos_mailbox_write(uint8_t channel, uint32_t data);
+static uint32_t panos_mailbox_read(uint8_t channel);
 
 struct FRAME_BUFFER {
     volatile uint32_t width;
@@ -39,7 +39,7 @@ int panos_screen_initialize(uint16_t width, uint16_t height, uint8_t depth)
     panos_fb.pointer		= 0;
     panos_fb.size			= 0;
 
-	panos_mailbox_write((uint32_t)&panos_fb | 0x40000000, 0x1);
+	panos_mailbox_write(0x1, (uint32_t)&panos_fb | 0x40000000);
 
 	uint32_t data = panos_mailbox_read(0x1);
 
@@ -51,31 +51,36 @@ int panos_screen_initialize(uint16_t width, uint16_t height, uint8_t depth)
 }
 
 // Static functions
-/*void panos_mailbox_write_wait()
+void panos_mailbox_wait_write()
 {
-	// Loop while MAIL_FULL
-	while ((*(MAIL_STATUS_ADDRESS) & 0x80000000) != 0);
+	while (((*MAIL_STATUS_ADDRESS) & 0x80000000) != 0) {
+		// ...
+	}
 }
-void panos_mailbox_read_wait()
+void panos_mailbox_wait_read()
 {
-	// Loop while MAIL_EMPTY
-	while ((*(MAIL_STATUS_ADDRESS) & 0x40000000) != 0);
+	while (((*MAIL_STATUS_ADDRESS) & 0x40000000) != 0) {
+		// ...
+	}
 }
 
 void panos_mailbox_write(uint8_t channel, uint32_t data)
 {
-	panos_mailbox_write_wait();
+	panos_mailbox_wait_write();
 
-	*(MAIL_WRITE_ADDRESS) = (uint32_t)channel | data;
+	data += (uint32_t)channel;
+
+	*(MAIL_WRITE_ADDRESS) = data;
 }
 
-void panos_mailbox_read(uint8_t channel, uint32_t *data)
+uint32_t panos_mailbox_read(uint8_t channel)
 {
+	uint32_t data;
 	do {
-		panos_mailbox_read_wait();
+		panos_mailbox_wait_read();
 
-		*data = *(MAIL_READ_ADDRESS);
-	} while (((*data) & 0x0000000F) != (uint32_t)channel);
+		data = *(MAIL_READ_ADDRESS);
+	} while ((data & 0x0000000F) != (uint32_t)channel);
 
-	*data &= 0xFFFFFFF0;
-}*/
+	return data & 0xFFFFFFF0;
+}
