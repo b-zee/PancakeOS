@@ -1,6 +1,6 @@
 /* Script for -z combreloc: combine and sort reloc sections */
 OUTPUT_FORMAT("elf32-littlearm", "elf32-bigarm",
-	      "elf32-littlearm")
+		  "elf32-littlearm")
 OUTPUT_ARCH(arm)
 ENTRY(_start)
 SEARCH_DIR("=/usr/local/lib"); SEARCH_DIR("=/lib"); SEARCH_DIR("=/usr/lib");
@@ -18,72 +18,72 @@ SECTIONS
   .gnu.version_d  : { *(.gnu.version_d) }
   .gnu.version_r  : { *(.gnu.version_r) }
   .rel.dyn        :
-    {
-      *(.rel.init)
-      *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
-      *(.rel.fini)
-      *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
-      *(.rel.data.rel.ro .rel.data.rel.ro.* .rel.gnu.linkonce.d.rel.ro.*)
-      *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
-      *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
-      *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
-      *(.rel.ctors)
-      *(.rel.dtors)
-      *(.rel.got)
-      *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
-      PROVIDE_HIDDEN (__rel_iplt_start = .);
-      *(.rel.iplt)
-      PROVIDE_HIDDEN (__rel_iplt_end = .);
-      PROVIDE_HIDDEN (__rela_iplt_start = .);
-      PROVIDE_HIDDEN (__rela_iplt_end = .);
-    }
+	{
+	  *(.rel.init)
+	  *(.rel.text .rel.text.* .rel.gnu.linkonce.t.*)
+	  *(.rel.fini)
+	  *(.rel.rodata .rel.rodata.* .rel.gnu.linkonce.r.*)
+	  *(.rel.data.rel.ro .rel.data.rel.ro.* .rel.gnu.linkonce.d.rel.ro.*)
+	  *(.rel.data .rel.data.* .rel.gnu.linkonce.d.*)
+	  *(.rel.tdata .rel.tdata.* .rel.gnu.linkonce.td.*)
+	  *(.rel.tbss .rel.tbss.* .rel.gnu.linkonce.tb.*)
+	  *(.rel.ctors)
+	  *(.rel.dtors)
+	  *(.rel.got)
+	  *(.rel.bss .rel.bss.* .rel.gnu.linkonce.b.*)
+	  PROVIDE_HIDDEN (__rel_iplt_start = .);
+	  *(.rel.iplt)
+	  PROVIDE_HIDDEN (__rel_iplt_end = .);
+	  PROVIDE_HIDDEN (__rela_iplt_start = .);
+	  PROVIDE_HIDDEN (__rela_iplt_end = .);
+	}
   .rela.dyn       :
-    {
-      *(.rela.init)
-      *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
-      *(.rela.fini)
-      *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
-      *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
-      *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
-      *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
-      *(.rela.ctors)
-      *(.rela.dtors)
-      *(.rela.got)
-      *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
-      PROVIDE_HIDDEN (__rel_iplt_start = .);
-      PROVIDE_HIDDEN (__rel_iplt_end = .);
-      PROVIDE_HIDDEN (__rela_iplt_start = .);
-      *(.rela.iplt)
-      PROVIDE_HIDDEN (__rela_iplt_end = .);
-    }
+	{
+	  *(.rela.init)
+	  *(.rela.text .rela.text.* .rela.gnu.linkonce.t.*)
+	  *(.rela.fini)
+	  *(.rela.rodata .rela.rodata.* .rela.gnu.linkonce.r.*)
+	  *(.rela.data .rela.data.* .rela.gnu.linkonce.d.*)
+	  *(.rela.tdata .rela.tdata.* .rela.gnu.linkonce.td.*)
+	  *(.rela.tbss .rela.tbss.* .rela.gnu.linkonce.tb.*)
+	  *(.rela.ctors)
+	  *(.rela.dtors)
+	  *(.rela.got)
+	  *(.rela.bss .rela.bss.* .rela.gnu.linkonce.b.*)
+	  PROVIDE_HIDDEN (__rel_iplt_start = .);
+	  PROVIDE_HIDDEN (__rel_iplt_end = .);
+	  PROVIDE_HIDDEN (__rela_iplt_start = .);
+	  *(.rela.iplt)
+	  PROVIDE_HIDDEN (__rela_iplt_end = .);
+	}
   .rel.plt        :
-    {
-      *(.rel.plt)
-    }
+	{
+	  *(.rel.plt)
+	}
   .rela.plt       :
-    {
-      *(.rela.plt)
-    }
+	{
+	  *(.rela.plt)
+	}
   .init           :
   {
-    KEEP (*(SORT_NONE(.init)))
+	KEEP (*(SORT_NONE(.init)))
   }
   .plt            : { *(.plt) }
   .iplt           : { *(.iplt) }
   .text           :
   {
-    *(.text.unlikely .text.*_unlikely)
-    *(.text.exit .text.exit.*)
-    *(.text.startup .text.startup.*)
-    *(.text.hot .text.hot.*)
-    *(.text .stub .text.* .gnu.linkonce.t.*)
-    /* .gnu.warning sections are handled specially by elf32.em.  */
-    *(.gnu.warning)
-    *(.glue_7t) *(.glue_7) *(.vfp11_veneer) *(.v4_bx)
+	*(.text.unlikely .text.*_unlikely)
+	*(.text.exit .text.exit.*)
+	*(.text.startup .text.startup.*)
+	*(.text.hot .text.hot.*)
+	*(.text .stub .text.* .gnu.linkonce.t.*)
+	/* .gnu.warning sections are handled specially by elf32.em.  */
+	*(.gnu.warning)
+	*(.glue_7t) *(.glue_7) *(.vfp11_veneer) *(.v4_bx)
   }
   .fini           :
   {
-    KEEP (*(SORT_NONE(.fini)))
+	KEEP (*(SORT_NONE(.fini)))
   }
   PROVIDE (__etext = .);
   PROVIDE (_etext = .);
@@ -102,7 +102,7 @@ SECTIONS
   .exception_ranges   : ONLY_IF_RO { *(.exception_ranges
   .exception_ranges*) }
   /* Adjust the address for the data segment.  We want to adjust up to
-     the same address within the page on the next page up.  */
+	 the same address within the page on the next page up.  */
   . = ALIGN(CONSTANT (MAXPAGESIZE)) + (. & (CONSTANT (MAXPAGESIZE) - 1));
   /* Exception handling  */
   .eh_frame       : ONLY_IF_RW { KEEP (*(.eh_frame)) }
@@ -113,52 +113,52 @@ SECTIONS
   .tbss		  : { *(.tbss .tbss.* .gnu.linkonce.tb.*) *(.tcommon) }
   .preinit_array     :
   {
-    PROVIDE_HIDDEN (__preinit_array_start = .);
-    KEEP (*(.preinit_array))
-    PROVIDE_HIDDEN (__preinit_array_end = .);
+	PROVIDE_HIDDEN (__preinit_array_start = .);
+	KEEP (*(.preinit_array))
+	PROVIDE_HIDDEN (__preinit_array_end = .);
   }
   .init_array     :
   {
-    PROVIDE_HIDDEN (__init_array_start = .);
-    KEEP (*(SORT(.init_array.*)))
-    KEEP (*(.init_array))
-    PROVIDE_HIDDEN (__init_array_end = .);
+	PROVIDE_HIDDEN (__init_array_start = .);
+	KEEP (*(SORT(.init_array.*)))
+	KEEP (*(.init_array))
+	PROVIDE_HIDDEN (__init_array_end = .);
   }
   .fini_array     :
   {
-    PROVIDE_HIDDEN (__fini_array_start = .);
-    KEEP (*(SORT(.fini_array.*)))
-    KEEP (*(.fini_array))
-    PROVIDE_HIDDEN (__fini_array_end = .);
+	PROVIDE_HIDDEN (__fini_array_start = .);
+	KEEP (*(SORT(.fini_array.*)))
+	KEEP (*(.fini_array))
+	PROVIDE_HIDDEN (__fini_array_end = .);
   }
   .ctors          :
   {
-    /* gcc uses crtbegin.o to find the start of
-       the constructors, so we make sure it is
-       first.  Because this is a wildcard, it
-       doesn't matter if the user does not
-       actually link against crtbegin.o; the
-       linker won't look for a file to match a
-       wildcard.  The wildcard also means that it
-       doesn't matter which directory crtbegin.o
-       is in.  */
-    KEEP (*crtbegin.o(.ctors))
-    KEEP (*crtbegin?.o(.ctors))
-    /* We don't want to include the .ctor section from
-       the crtend.o file until after the sorted ctors.
-       The .ctor section from the crtend file contains the
-       end of ctors marker and it must be last */
-    KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o ) .ctors))
-    KEEP (*(SORT(.ctors.*)))
-    KEEP (*(.ctors))
+	/* gcc uses crtbegin.o to find the start of
+	   the constructors, so we make sure it is
+	   first.  Because this is a wildcard, it
+	   doesn't matter if the user does not
+	   actually link against crtbegin.o; the
+	   linker won't look for a file to match a
+	   wildcard.  The wildcard also means that it
+	   doesn't matter which directory crtbegin.o
+	   is in.  */
+	KEEP (*crtbegin.o(.ctors))
+	KEEP (*crtbegin?.o(.ctors))
+	/* We don't want to include the .ctor section from
+	   the crtend.o file until after the sorted ctors.
+	   The .ctor section from the crtend file contains the
+	   end of ctors marker and it must be last */
+	KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o ) .ctors))
+	KEEP (*(SORT(.ctors.*)))
+	KEEP (*(.ctors))
   }
   .dtors          :
   {
-    KEEP (*crtbegin.o(.dtors))
-    KEEP (*crtbegin?.o(.dtors))
-    KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o ) .dtors))
-    KEEP (*(SORT(.dtors.*)))
-    KEEP (*(.dtors))
+	KEEP (*crtbegin.o(.dtors))
+	KEEP (*crtbegin?.o(.dtors))
+	KEEP (*(EXCLUDE_FILE (*crtend.o *crtend?.o ) .dtors))
+	KEEP (*(SORT(.dtors.*)))
+	KEEP (*(.dtors))
   }
   .jcr            : { KEEP (*(.jcr)) }
   .data.rel.ro : { *(.data.rel.ro.local* .gnu.linkonce.d.rel.ro.local.*) *(.data.rel.ro .data.rel.ro.* .gnu.linkonce.d.rel.ro.*) }
@@ -166,9 +166,9 @@ SECTIONS
   .got            : { *(.got.plt) *(.igot.plt) *(.got) *(.igot) }
   .data           :
   {
-    __data_start = . ;
-    *(.data .data.* .gnu.linkonce.d.*)
-    SORT(CONSTRUCTORS)
+	__data_start = . ;
+	*(.data .data.* .gnu.linkonce.d.*)
+	SORT(CONSTRUCTORS)
   }
   .data1          : { *(.data1) }
   _edata = .; PROVIDE (edata = .);
@@ -181,10 +181,10 @@ SECTIONS
    *(.bss .bss.* .gnu.linkonce.b.*)
    *(COMMON)
    /* Align here to ensure that the .bss section occupies space up to
-      _end.  Align after .bss to ensure correct alignment even if the
-      .bss section disappears because there are no input sections.
-      FIXME: Why do we need it? When there is no .bss section, we don't
-      pad the .data section.  */
+	  _end.  Align after .bss to ensure correct alignment even if the
+	  .bss section disappears because there are no input sections.
+	  FIXME: Why do we need it? When there is no .bss section, we don't
+	  pad the .data section.  */
    . = ALIGN(. != 0 ? 32 / 8 : 1);
   }
   _bss_end__ = . ; __bss_end__ = . ;
@@ -201,8 +201,8 @@ SECTIONS
   .stab.indexstr 0 : { *(.stab.indexstr) }
   .comment       0 : { *(.comment) }
   /* DWARF debug sections.
-     Symbols in the DWARF debugging sections are relative to the beginning
-     of the section so we begin them at 0.  */
+	 Symbols in the DWARF debugging sections are relative to the beginning
+	 of the section so we begin them at 0.  */
   /* DWARF 1 */
   .debug          0 : { *(.debug) }
   .line           0 : { *(.line) }
@@ -230,10 +230,10 @@ SECTIONS
   .debug_ranges   0 : { *(.debug_ranges) }
   /* DWARF Extension.  */
   .debug_macro    0 : { *(.debug_macro) }
-    .stack         0x80000 :
+	.stack         0x80000 :
   {
-    _stack = .;
-    *(.stack)
+	_stack = .;
+	*(.stack)
   }
   .ARM.attributes 0 : { KEEP (*(.ARM.attributes)) KEEP (*(.gnu.attributes)) }
   .note.gnu.arm.ident 0 : { KEEP (*(.note.gnu.arm.ident)) }

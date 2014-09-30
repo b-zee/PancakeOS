@@ -18,17 +18,17 @@ all: $(TARGET)
 rebuild: clean all
 
 $(TARGET): $(OBJ_FILES)
-    $(TOOLCHAIN)-ar rcs $@ -o $(OBJ_FILES)
+	$(TOOLCHAIN)-ar rcs $@ -o $(OBJ_FILES)
 
 # Create object files from assembly files.
 $(OBJ_DIR)%.o: $(SRC_DIR)%.s
-    $(TOOLCHAIN)-as -c $< -o $@
+	$(TOOLCHAIN)-as -c $< -o $@
 
 # Create object files from c files.
 $(OBJ_DIR)%.o: $(SRC_DIR)%.c
-    $(TOOLCHAIN)-gcc $(GCC_OPTIONS) -c $< -o $@
-    $(TOOLCHAIN)-gcc $(GCC_OPTIONS) -S $< -o $(basename $@).list
+	$(TOOLCHAIN)-gcc $(GCC_OPTIONS) -c $< -o $@
+	$(TOOLCHAIN)-gcc $(GCC_OPTIONS) -S $< -o $(basename $@).list
 
 clean:
-    -rm -f $(OBJ_DIR)*
-    -rm -f $(TARGET)
+	-rm -f $(OBJ_DIR)*
+	-rm -f $(TARGET)

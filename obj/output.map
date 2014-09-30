@@ -4,29 +4,29 @@ Archive member included because of file (symbol)
 ../lib/\libpanos.a(screen.o)  ../obj/main.o (panos_screen_initialize)
 ../lib/\libpanos.a(timer.o)   ../obj/main.o (panos_wait_us)
 ../lib/\libpanos.a(mailbox.o)
-                              ../lib/\libpanos.a(screen.o) (panos_mailbox_read)
+							  ../lib/\libpanos.a(screen.o) (panos_mailbox_read)
 
 Discarded input sections
 
  .ARM.attributes
-                0x00000000       0x14 ../obj/bootstrap.o
+				0x00000000       0x14 ../obj/bootstrap.o
  .comment       0x00000000       0x71 ../obj/main.o
  .ARM.attributes
-                0x00000000       0x35 ../obj/main.o
+				0x00000000       0x35 ../obj/main.o
  .comment       0x00000000       0x71 ../obj/rpi_startup.o
  .ARM.attributes
-                0x00000000       0x35 ../obj/rpi_startup.o
+				0x00000000       0x35 ../obj/rpi_startup.o
  .comment       0x00000000       0x71 ../lib/\libpanos.a(gpio.o)
  .ARM.attributes
-                0x00000000       0x35 ../lib/\libpanos.a(gpio.o)
+				0x00000000       0x35 ../lib/\libpanos.a(gpio.o)
  .comment       0x00000000       0x71 ../lib/\libpanos.a(screen.o)
  .ARM.attributes
-                0x00000000       0x35 ../lib/\libpanos.a(screen.o)
+				0x00000000       0x35 ../lib/\libpanos.a(screen.o)
  .comment       0x00000000       0x71 ../lib/\libpanos.a(timer.o)
  .ARM.attributes
-                0x00000000       0x35 ../lib/\libpanos.a(timer.o)
+				0x00000000       0x35 ../lib/\libpanos.a(timer.o)
  .ARM.attributes
-                0x00000000       0x14 ../lib/\libpanos.a(mailbox.o)
+				0x00000000       0x14 ../lib/\libpanos.a(mailbox.o)
 
 Memory Configuration
 
@@ -35,12 +35,12 @@ Name             Origin             Length             Attributes
 
 Linker script and memory map
 
-                0x00008000                . = 0x8000
+				0x00008000                . = 0x8000
 
 .init           0x00008000        0xc
  *(.init)
  .init          0x00008000        0xc ../obj/bootstrap.o
-                0x00008000                _start
+				0x00008000                _start
 
 .data           0x0000800c        0x0
  *(.data)
@@ -56,22 +56,22 @@ Linker script and memory map
  *(.text.* .text)
  .text          0x0000800c        0x0 ../obj/bootstrap.o
  .text          0x0000800c       0x80 ../obj/main.o
-                0x0000800c                main
+				0x0000800c                main
  .text          0x0000808c       0x3c ../obj/rpi_startup.o
-                0x0000808c                _rpi_startup
+				0x0000808c                _rpi_startup
  .text          0x000080c8       0x84 ../lib/\libpanos.a(gpio.o)
-                0x000080c8                panos_pin_function
-                0x0000810c                panos_pin_set
-                0x0000812c                panos_pin_clear
+				0x000080c8                panos_pin_function
+				0x0000810c                panos_pin_set
+				0x0000812c                panos_pin_clear
  .text          0x0000814c       0x74 ../lib/\libpanos.a(screen.o)
-                0x0000814c                panos_screen_initialize
+				0x0000814c                panos_screen_initialize
  .text          0x000081c0       0x30 ../lib/\libpanos.a(timer.o)
-                0x000081c0                panos_wait_us
+				0x000081c0                panos_wait_us
  .text          0x000081f0       0x6c ../lib/\libpanos.a(mailbox.o)
-                0x000081f0                GetMailboxBase
-                0x000081f8                panos_mailbox_read
-                0x0000822c                panos_mailbox_write
-                0x0000825c                __bss_start = .
+				0x000081f0                GetMailboxBase
+				0x000081f8                panos_mailbox_read
+				0x0000822c                panos_mailbox_write
+				0x0000825c                __bss_start = .
 
 .bss            0x00008260       0x30
  *(.bss)
@@ -82,8 +82,8 @@ Linker script and memory map
  .bss           0x00008260       0x30 ../lib/\libpanos.a(screen.o)
  .bss           0x00008290        0x0 ../lib/\libpanos.a(timer.o)
  .bss           0x00008290        0x0 ../lib/\libpanos.a(mailbox.o)
-                0x00009000                . = ALIGN (0x1000)
-                0x00009000                __bss_end = .
+				0x00009000                . = ALIGN (0x1000)
+				0x00009000                __bss_end = .
 
 /DISCARD/
  *(*)

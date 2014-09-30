@@ -6,11 +6,11 @@ This is the library providing an interface to the screen and GPIO pins of the Ra
 
 ### `0x2000B880` - Mailbox ###
 
-|Offset |Size(bits) |Name       |Description                                                            |
-|:--:   |:--:       |----       |----                                                                   |
-|`0x00` |32         |READ       |To receive data                                                        |
-|`0x18` |32         |STATUS     |Bit 31 is clear when ready to write, bit 30 is clear when we can read  |
-|`0x20` |32         |WRITE      |To send data                                                           |
+|Offset |Size(bits) |Name       |Description    |
+|:--:   |:--:       |----       |----           |
+|`0x00` |32         |READ       |To receive data|
+|`0x18` |32         |STATUS     |Bit 31 is clear when ready to write, bit 30 is clear when we can read |
+|`0x20` |32         |WRITE      |To send data   |
 
 ### `0x20200000` - GPIO ###
 
