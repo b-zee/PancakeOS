@@ -12,11 +12,20 @@ struct SYS_TIMER {
 	volatile uint32_t C3;
 };
 
+static struct SYS_TIMER* system_timer = (struct SYS_TIMER*)SYSTIMER_ADDRESS;
+
 void panos_wait_us(uint32_t us)
 {
-	struct SYS_TIMER* system_timer = (struct SYS_TIMER*)SYSTIMER_ADDRESS;
-
 	volatile uint32_t current_time = system_timer->CLO;
 
 	while (system_timer->CLO - current_time < us);
+}
+void panos_wait_till(uint32_t us)
+{
+	while (system_timer->CLO < us);
+}
+
+uint32_t panos_now()
+{
+	return system_timer->CLO;
 }

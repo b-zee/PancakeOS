@@ -3,6 +3,7 @@ Archive member included because of file (symbol)
 ../lib/\libpanos.a(gpio.o)    ../obj/main.o (panos_pin_function)
 ../lib/\libpanos.a(screen.o)  ../obj/main.o (panos_screen_initialize)
 ../lib/\libpanos.a(timer.o)   ../obj/main.o (panos_wait_us)
+../lib/\libpanos.a(uart.o)    ../lib/\libpanos.a(screen.o) (panos_uart_init)
 
 Discarded input sections
 
@@ -23,6 +24,9 @@ Discarded input sections
  .comment       0x00000000       0x71 ../lib/\libpanos.a(timer.o)
  .ARM.attributes
                 0x00000000       0x35 ../lib/\libpanos.a(timer.o)
+ .comment       0x00000000       0x71 ../lib/\libpanos.a(uart.o)
+ .ARM.attributes
+                0x00000000       0x35 ../lib/\libpanos.a(uart.o)
 
 Memory Configuration
 
@@ -38,41 +42,49 @@ Linker script and memory map
  .init          0x00008000        0xc ../obj/bootstrap.o
                 0x00008000                _start
 
-.data           0x0000800c        0x0
+.data           0x0000800c        0x8
  *(.data)
  .data          0x0000800c        0x0 ../obj/bootstrap.o
  .data          0x0000800c        0x0 ../obj/main.o
  .data          0x0000800c        0x0 ../obj/rpi_startup.o
  .data          0x0000800c        0x0 ../lib/\libpanos.a(gpio.o)
- .data          0x0000800c        0x0 ../lib/\libpanos.a(screen.o)
- .data          0x0000800c        0x0 ../lib/\libpanos.a(timer.o)
+ .data          0x0000800c        0x4 ../lib/\libpanos.a(screen.o)
+ .data          0x00008010        0x4 ../lib/\libpanos.a(timer.o)
+ .data          0x00008014        0x0 ../lib/\libpanos.a(uart.o)
 
-.text           0x0000800c      0x2a0
+.text           0x00008014      0x768
  *(.text.* .text)
- .text          0x0000800c        0x0 ../obj/bootstrap.o
- .text          0x0000800c      0x10c ../obj/main.o
-                0x0000800c                main
- .text          0x00008118       0x3c ../obj/rpi_startup.o
-                0x00008118                _rpi_startup
- .text          0x00008154       0x84 ../lib/\libpanos.a(gpio.o)
-                0x00008154                panos_pin_function
-                0x00008198                panos_pin_set
-                0x000081b8                panos_pin_clear
- .text          0x000081d8       0xa4 ../lib/\libpanos.a(screen.o)
-                0x000081d8                panos_screen_initialize
-                0x0000826c                panos_screen_framebuffer
- .text          0x0000827c       0x30 ../lib/\libpanos.a(timer.o)
-                0x0000827c                panos_wait_us
-                0x000082ac                __bss_start = .
+ .text          0x00008014        0x0 ../obj/bootstrap.o
+ .text          0x00008014      0x108 ../obj/main.o
+                0x00008014                main
+ .text          0x0000811c       0x3c ../obj/rpi_startup.o
+                0x0000811c                _rpi_startup
+ .text          0x00008158      0x1c8 ../lib/\libpanos.a(gpio.o)
+                0x00008158                panos_pin_function
+                0x00008280                panos_pin_set
+                0x000082d0                panos_pin_clear
+ .text          0x00008320      0x220 ../lib/\libpanos.a(screen.o)
+                0x00008320                panos_screen_initialize
+                0x00008424                panos_screen_framebuffer
+ .text          0x00008540       0xb8 ../lib/\libpanos.a(timer.o)
+                0x00008540                panos_wait_us
+                0x00008594                panos_wait_till
+                0x000085d0                panos_now
+ .text          0x000085f8      0x184 ../lib/\libpanos.a(uart.o)
+                0x000085f8                panos_uart_init
+                0x00008618                panos_uart_char
+                0x000086dc                panos_uart_int
+                0x0000877c                __bss_start = .
 
-.bss            0x000082b0       0x30
+.bss            0x00008780       0x30
  *(.bss)
- .bss           0x000082b0        0x0 ../obj/bootstrap.o
- .bss           0x000082b0        0x0 ../obj/main.o
- .bss           0x000082b0        0x0 ../obj/rpi_startup.o
- .bss           0x000082b0        0x0 ../lib/\libpanos.a(gpio.o)
- .bss           0x000082b0       0x30 ../lib/\libpanos.a(screen.o)
- .bss           0x000082e0        0x0 ../lib/\libpanos.a(timer.o)
+ .bss           0x00008780        0x0 ../obj/bootstrap.o
+ .bss           0x00008780        0x0 ../obj/main.o
+ .bss           0x00008780        0x0 ../obj/rpi_startup.o
+ .bss           0x00008780        0x0 ../lib/\libpanos.a(gpio.o)
+ .bss           0x00008780       0x30 ../lib/\libpanos.a(screen.o)
+ .bss           0x000087b0        0x0 ../lib/\libpanos.a(timer.o)
+ .bss           0x000087b0        0x0 ../lib/\libpanos.a(uart.o)
                 0x00009000                . = ALIGN (0x1000)
                 0x00009000                __bss_end = .
 
@@ -81,5 +93,6 @@ Linker script and memory map
 LOAD ../obj/bootstrap.o
 LOAD ../obj/main.o
 LOAD ../obj/rpi_startup.o
+LOAD ../lib/\libgcc.a
 LOAD ../lib/\libpanos.a
 OUTPUT(../obj/output.elf elf32-littlearm)

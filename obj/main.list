@@ -52,7 +52,6 @@ main:
 	mov	r3, r3, asl #1
 	add	r3, r3, r2
 	add	r3, r1, r3
-	add	r3, r3, #1
 	ldr	r2, [fp, #-28]
 	add	r3, r2, r3
 	mvn	r2, #0

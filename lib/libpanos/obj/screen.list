@@ -8,82 +8,226 @@
 	.eabi_attribute 24, 1
 	.eabi_attribute 25, 1
 	.eabi_attribute 26, 1
-	.eabi_attribute 30, 2
+	.eabi_attribute 30, 6
 	.eabi_attribute 34, 1
 	.eabi_attribute 18, 4
 	.file	"screen.c"
+	.bss
+	.align	4
+panos_fb:
+	.space	40
+	.data
+	.align	2
+	.type	panos_mb, %object
+	.size	panos_mb, 4
+panos_mb:
+	.word	536918144
 	.text
 	.align	2
 	.global	panos_screen_initialize
 	.type	panos_screen_initialize, %function
 panos_screen_initialize:
-	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
-	@ link register save eliminated.
-	ldr	ip, .L9
-	mov	r3, #0
-	stmfd	sp!, {r4, r5}
-	ldr	r4, .L9+4
-	str	r0, [ip]
-	orr	r5, ip, #1073741824
-	str	r1, [ip, #4]
-	str	r0, [ip, #8]
-	str	r1, [ip, #12]
-	str	r3, [ip, #16]
-	str	r2, [ip, #20]
-	str	r3, [ip, #24]
-	str	r3, [ip, #28]
-	str	r3, [ip, #32]
-	str	r3, [ip, #36]
-.L3:
-	ldr	r3, [r4, #2200]
-	ldr	r2, .L9+4
+	@ args = 0, pretend = 0, frame = 16
+	@ frame_needed = 1, uses_anonymous_args = 0
+	stmfd	sp!, {fp, lr}
+	add	fp, sp, #4
+	sub	sp, sp, #16
+	mov	r3, r2
+	strh	r0, [fp, #-14]	@ movhi
+	strh	r1, [fp, #-16]	@ movhi
+	strb	r3, [fp, #-17]
+	bl	panos_uart_init
+	ldrh	r2, [fp, #-14]
+	ldr	r3, .L5
+	str	r2, [r3]
+	ldrh	r2, [fp, #-16]
+	ldr	r3, .L5
+	str	r2, [r3, #4]
+	ldrh	r2, [fp, #-14]
+	ldr	r3, .L5
+	str	r2, [r3, #8]
+	ldrh	r2, [fp, #-16]
+	ldr	r3, .L5
+	str	r2, [r3, #12]
+	ldr	r3, .L5
+	mov	r2, #0
+	str	r2, [r3, #16]
+	ldrb	r2, [fp, #-17]	@ zero_extendqisi2
+	ldr	r3, .L5
+	str	r2, [r3, #20]
+	ldr	r3, .L5
+	mov	r2, #0
+	str	r2, [r3, #24]
+	ldr	r3, .L5
+	mov	r2, #0
+	str	r2, [r3, #28]
+	ldr	r3, .L5
+	mov	r2, #0
+	str	r2, [r3, #32]
+	ldr	r3, .L5
+	mov	r2, #0
+	str	r2, [r3, #36]
+	ldr	r3, .L5
+	orr	r3, r3, #1073741824
+	mov	r0, #1
+	mov	r1, r3
+	bl	panos_mailbox_write
+	mov	r0, #1
+	bl	panos_mailbox_read
+	str	r0, [fp, #-8]
+	ldr	r3, [fp, #-8]
 	cmp	r3, #0
-	blt	.L3
-	add	r3, r5, #1
-	str	r3, [r2, #2208]
+	bne	.L2
+	ldr	r3, .L5
+	ldr	r3, [r3, #32]
+	cmp	r3, #0
+	bne	.L3
+.L2:
+	mov	r3, #1
+	b	.L4
+.L3:
+	ldr	r3, .L5
+	ldr	r3, [r3, #36]
+	mov	r0, r3
+	mov	r1, #10
+	bl	panos_uart_int
+	mov	r3, #0
 .L4:
-	ldr	r3, [r2, #2200]
-	tst	r3, #1073741824
-	bne	.L4
-	ldr	r3, [r2, #2176]
-	and	r0, r3, #15
-	cmp	r0, #1
-	bne	.L4
-	bics	r2, r3, #15
-	bne	.L6
-	ldr	r0, [ip, #32]
-	rsbs	r0, r0, #1
-	movcc	r0, #0
+	mov	r0, r3
+	sub	sp, fp, #4
+	@ sp needed
+	ldmfd	sp!, {fp, pc}
 .L6:
-	ldmfd	sp!, {r4, r5}
-	bx	lr
-.L10:
 	.align	2
-.L9:
-	.word	.LANCHOR0
-	.word	536915968
+.L5:
+	.word	panos_fb
 	.size	panos_screen_initialize, .-panos_screen_initialize
 	.align	2
 	.global	panos_screen_framebuffer
 	.type	panos_screen_framebuffer, %function
 panos_screen_framebuffer:
 	@ args = 0, pretend = 0, frame = 0
-	@ frame_needed = 0, uses_anonymous_args = 0
+	@ frame_needed = 1, uses_anonymous_args = 0
 	@ link register save eliminated.
-	ldr	r3, .L12
-	ldr	r0, [r3, #32]
+	str	fp, [sp, #-4]!
+	add	fp, sp, #0
+	ldr	r3, .L9
+	ldr	r3, [r3, #32]
+	mov	r0, r3
+	sub	sp, fp, #0
+	@ sp needed
+	ldr	fp, [sp], #4
 	bx	lr
-.L13:
+.L10:
 	.align	2
-.L12:
-	.word	.LANCHOR0
+.L9:
+	.word	panos_fb
 	.size	panos_screen_framebuffer, .-panos_screen_framebuffer
-	.bss
-	.align	4
-	.set	.LANCHOR0,. + 0
-	.type	panos_fb, %object
-	.size	panos_fb, 40
-panos_fb:
-	.space	40
+	.align	2
+	.type	panos_mailbox_wait_write, %function
+panos_mailbox_wait_write:
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 1, uses_anonymous_args = 0
+	@ link register save eliminated.
+	str	fp, [sp, #-4]!
+	add	fp, sp, #0
+	mov	r0, r0	@ nop
+.L12:
+	ldr	r3, .L13
+	ldr	r3, [r3]
+	ldr	r3, [r3, #24]
+	cmp	r3, #0
+	blt	.L12
+	sub	sp, fp, #0
+	@ sp needed
+	ldr	fp, [sp], #4
+	bx	lr
+.L14:
+	.align	2
+.L13:
+	.word	panos_mb
+	.size	panos_mailbox_wait_write, .-panos_mailbox_wait_write
+	.align	2
+	.type	panos_mailbox_wait_read, %function
+panos_mailbox_wait_read:
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 1, uses_anonymous_args = 0
+	@ link register save eliminated.
+	str	fp, [sp, #-4]!
+	add	fp, sp, #0
+	mov	r0, r0	@ nop
+.L16:
+	ldr	r3, .L17
+	ldr	r3, [r3]
+	ldr	r3, [r3, #24]
+	and	r3, r3, #1073741824
+	cmp	r3, #0
+	bne	.L16
+	sub	sp, fp, #0
+	@ sp needed
+	ldr	fp, [sp], #4
+	bx	lr
+.L18:
+	.align	2
+.L17:
+	.word	panos_mb
+	.size	panos_mailbox_wait_read, .-panos_mailbox_wait_read
+	.align	2
+	.type	panos_mailbox_write, %function
+panos_mailbox_write:
+	@ args = 0, pretend = 0, frame = 8
+	@ frame_needed = 1, uses_anonymous_args = 0
+	stmfd	sp!, {fp, lr}
+	add	fp, sp, #4
+	sub	sp, sp, #8
+	mov	r3, r0
+	str	r1, [fp, #-12]
+	strb	r3, [fp, #-5]
+	bl	panos_mailbox_wait_write
+	ldr	r3, .L20
+	ldr	r3, [r3]
+	ldrb	r1, [fp, #-5]	@ zero_extendqisi2
+	ldr	r2, [fp, #-12]
+	add	r2, r1, r2
+	str	r2, [r3, #32]
+	sub	sp, fp, #4
+	@ sp needed
+	ldmfd	sp!, {fp, pc}
+.L21:
+	.align	2
+.L20:
+	.word	panos_mb
+	.size	panos_mailbox_write, .-panos_mailbox_write
+	.align	2
+	.type	panos_mailbox_read, %function
+panos_mailbox_read:
+	@ args = 0, pretend = 0, frame = 16
+	@ frame_needed = 1, uses_anonymous_args = 0
+	stmfd	sp!, {fp, lr}
+	add	fp, sp, #4
+	sub	sp, sp, #16
+	mov	r3, r0
+	strb	r3, [fp, #-13]
+.L23:
+	bl	panos_mailbox_wait_read
+	ldr	r3, .L25
+	ldr	r3, [r3]
+	ldr	r3, [r3]
+	str	r3, [fp, #-8]
+	ldr	r3, [fp, #-8]
+	and	r2, r3, #15
+	ldrb	r3, [fp, #-13]	@ zero_extendqisi2
+	cmp	r2, r3
+	bne	.L23
+	ldr	r3, [fp, #-8]
+	bic	r3, r3, #15
+	mov	r0, r3
+	sub	sp, fp, #4
+	@ sp needed
+	ldmfd	sp!, {fp, pc}
+.L26:
+	.align	2
+.L25:
+	.word	panos_mb
+	.size	panos_mailbox_read, .-panos_mailbox_read
 	.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-branch revision 211358]"

@@ -2,7 +2,7 @@ TOOLCHAIN = arm-none-eabi
 
 # Optimal options for GCC according to eLinux.
 C_OPTIONS   = -Wall -Wextra -Wpedantic -std=c99
-GCC_OPTIONS = $(C_OPTIONS) -O3 -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
+GCC_OPTIONS = $(C_OPTIONS) -O0 -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
 
 OBJ_DIR = ../obj/
 LIB_DIR = ../../

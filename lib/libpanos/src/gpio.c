@@ -37,7 +37,7 @@
 void panos_pin_function(uint8_t pin, uint8_t function)
 {
 	// Clear the function bits, then overwrite function
-	*(GPFSEL_ADDRESS + (pin / 10)) &= (0x7 << ((pin % 10) * 3));
+	*(GPFSEL_ADDRESS + (pin / 10)) &= ~(0x7 << ((pin % 10) * 3));
 	*(GPFSEL_ADDRESS + (pin / 10)) |= (function << ((pin % 10) * 3));
 }
 

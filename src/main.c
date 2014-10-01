@@ -16,6 +16,7 @@ int main()
 
 		uint8_t *buffer = panos_screen_framebuffer();
 		for (uint32_t y = 0; y < 480; ++y) {
+			
 			for (uint32_t x = 0; x < 640; ++x) {
 					buffer[y * stride + x * 3] = 255;
 			}
@@ -27,7 +28,7 @@ int main()
 
 	panos_pin_function(16, FSEL_OUTPUT);
 	panos_pin_set(16);
-
+	
 	while (1) {
 		panos_pin_set(16);
 

@@ -12,5 +12,7 @@
 #include <stdint.h>
 
 void panos_wait_us(uint32_t us);
+void panos_wait_till(uint32_t us);
+uint32_t panos_now();
 
 #endif

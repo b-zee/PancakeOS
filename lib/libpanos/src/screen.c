@@ -1,5 +1,7 @@
 #include "screen.h"
+
 #include "error.h"
+#include "uart.h"
 
 #define MAIL_ADDRESS        (unsigned int *)0x2000B880
 #define MAIL_READ_ADDRESS   MAIL_ADDRESS + 0x00
@@ -39,6 +41,8 @@ static struct MAILBOX      *panos_mb                                = (struct MA
 
 int panos_screen_initialize(uint16_t width, uint16_t height, uint8_t depth)
 {
+	panos_uart_init();
+
 	panos_fb.width          = (uint32_t)width;
 	panos_fb.height         = (uint32_t)height;
 	panos_fb.virtual_width  = (uint32_t)width;
@@ -59,6 +63,8 @@ int panos_screen_initialize(uint16_t width, uint16_t height, uint8_t depth)
 	if (data != 0 || panos_fb.pointer == 0) {
 		return PANOS_ERROR;
 	}
+
+	panos_uart_int((int)panos_fb.size, 10);
 
 	return PANOS_SUCCES;
 }

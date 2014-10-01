@@ -1,0 +1,144 @@
+	.arch armv6zk
+	.eabi_attribute 27, 3
+	.eabi_attribute 28, 1
+	.fpu vfp
+	.eabi_attribute 20, 1
+	.eabi_attribute 21, 1
+	.eabi_attribute 23, 3
+	.eabi_attribute 24, 1
+	.eabi_attribute 25, 1
+	.eabi_attribute 26, 1
+	.eabi_attribute 30, 6
+	.eabi_attribute 34, 1
+	.eabi_attribute 18, 4
+	.file	"uart.c"
+	.text
+	.align	2
+	.global	panos_uart_init
+	.type	panos_uart_init, %function
+panos_uart_init:
+	@ args = 0, pretend = 0, frame = 0
+	@ frame_needed = 1, uses_anonymous_args = 0
+	stmfd	sp!, {fp, lr}
+	add	fp, sp, #4
+	mov	r0, #14
+	mov	r1, #1
+	bl	panos_pin_function
+	mov	r0, #14
+	bl	panos_pin_set
+	ldmfd	sp!, {fp, pc}
+	.size	panos_uart_init, .-panos_uart_init
+	.align	2
+	.global	panos_uart_char
+	.type	panos_uart_char, %function
+panos_uart_char:
+	@ args = 0, pretend = 0, frame = 16
+	@ frame_needed = 1, uses_anonymous_args = 0
+	stmfd	sp!, {fp, lr}
+	add	fp, sp, #4
+	sub	sp, sp, #16
+	mov	r3, r0
+	strb	r3, [fp, #-13]
+	mov	r0, #14
+	bl	panos_pin_clear
+	bl	panos_now
+	str	r0, [fp, #-8]
+	ldr	r3, [fp, #-8]
+	add	r3, r3, #104
+	str	r3, [fp, #-8]
+	ldr	r0, [fp, #-8]
+	bl	panos_wait_till
+	mov	r3, #0
+	str	r3, [fp, #-12]
+	b	.L3
+.L6:
+	ldrb	r3, [fp, #-13]	@ zero_extendqisi2
+	and	r3, r3, #1
+	cmp	r3, #0
+	beq	.L4
+	mov	r0, #14
+	bl	panos_pin_set
+	b	.L5
+.L4:
+	mov	r0, #14
+	bl	panos_pin_clear
+.L5:
+	ldrb	r3, [fp, #-13]	@ zero_extendqisi2
+	mov	r3, r3, lsr #1
+	strb	r3, [fp, #-13]
+	ldr	r3, [fp, #-8]
+	add	r3, r3, #104
+	str	r3, [fp, #-8]
+	ldr	r0, [fp, #-8]
+	bl	panos_wait_till
+	ldr	r3, [fp, #-12]
+	add	r3, r3, #1
+	str	r3, [fp, #-12]
+.L3:
+	ldr	r3, [fp, #-12]
+	cmp	r3, #7
+	ble	.L6
+	mov	r0, #14
+	bl	panos_pin_set
+	ldr	r3, [fp, #-8]
+	add	r3, r3, #208
+	str	r3, [fp, #-8]
+	ldr	r0, [fp, #-8]
+	bl	panos_wait_till
+	sub	sp, fp, #4
+	@ sp needed
+	ldmfd	sp!, {fp, pc}
+	.size	panos_uart_char, .-panos_uart_char
+	.global	__aeabi_idiv
+	.align	2
+	.global	panos_uart_int
+	.type	panos_uart_int, %function
+panos_uart_int:
+	@ args = 0, pretend = 0, frame = 16
+	@ frame_needed = 1, uses_anonymous_args = 0
+	stmfd	sp!, {fp, lr}
+	add	fp, sp, #4
+	sub	sp, sp, #16
+	str	r0, [fp, #-16]
+	str	r1, [fp, #-20]
+	ldr	r3, [fp, #-16]
+	str	r3, [fp, #-8]
+.L10:
+	ldr	r0, [fp, #-8]
+	ldr	r1, [fp, #-20]
+	bl	__aeabi_idiv
+	mov	r3, r0
+	ldr	r2, [fp, #-8]
+	rsb	r3, r3, r2
+	str	r3, [fp, #-12]
+	ldr	r3, [fp, #-12]
+	cmp	r3, #9
+	bgt	.L8
+	ldr	r3, [fp, #-12]
+	uxtb	r3, r3
+	add	r3, r3, #48
+	uxtb	r3, r3
+	mov	r0, r3
+	bl	panos_uart_char
+	b	.L9
+.L8:
+	ldr	r3, [fp, #-12]
+	uxtb	r3, r3
+	add	r3, r3, #55
+	uxtb	r3, r3
+	mov	r0, r3
+	bl	panos_uart_char
+.L9:
+	ldr	r0, [fp, #-8]
+	ldr	r1, [fp, #-20]
+	bl	__aeabi_idiv
+	mov	r3, r0
+	str	r3, [fp, #-8]
+	ldr	r3, [fp, #-8]
+	cmp	r3, #0
+	bne	.L10
+	sub	sp, fp, #4
+	@ sp needed
+	ldmfd	sp!, {fp, pc}
+	.size	panos_uart_int, .-panos_uart_int
+	.ident	"GCC: (GNU Tools for ARM Embedded Processors) 4.8.4 20140526 (release) [ARM/embedded-4_8-branch revision 211358]"

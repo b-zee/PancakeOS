@@ -13,5 +13,6 @@
 
 int panos_screen_initialize(uint16_t width, uint16_t height, uint8_t depth);
 uint8_t *panos_screen_framebuffer();
+void panos_uart_int(int num, int base);
 
 #endif
