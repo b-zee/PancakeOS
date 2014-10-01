@@ -4,6 +4,10 @@ Archive member included because of file (symbol)
 ../lib/\libpanos.a(screen.o)  ../obj/main.o (panos_screen_initialize)
 ../lib/\libpanos.a(timer.o)   ../obj/main.o (panos_wait_us)
 ../lib/\libpanos.a(uart.o)    ../lib/\libpanos.a(screen.o) (panos_uart_init)
+C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_divsi3.o)
+                              ../lib/\libpanos.a(uart.o) (__aeabi_idiv)
+C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_dvmd_tls.o)
+                              C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_divsi3.o) (__aeabi_idiv0)
 
 Discarded input sections
 
@@ -27,6 +31,11 @@ Discarded input sections
  .comment       0x00000000       0x71 ../lib/\libpanos.a(uart.o)
  .ARM.attributes
                 0x00000000       0x35 ../lib/\libpanos.a(uart.o)
+ .debug_frame   0x00000000       0x20 C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_divsi3.o)
+ .ARM.attributes
+                0x00000000       0x18 C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_divsi3.o)
+ .ARM.attributes
+                0x00000000       0x18 C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_dvmd_tls.o)
 
 Memory Configuration
 
@@ -51,8 +60,10 @@ Linker script and memory map
  .data          0x0000800c        0x4 ../lib/\libpanos.a(screen.o)
  .data          0x00008010        0x4 ../lib/\libpanos.a(timer.o)
  .data          0x00008014        0x0 ../lib/\libpanos.a(uart.o)
+ .data          0x00008014        0x0 C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_divsi3.o)
+ .data          0x00008014        0x0 C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_dvmd_tls.o)
 
-.text           0x00008014      0x768
+.text           0x00008014      0x8b4
  *(.text.* .text)
  .text          0x00008014        0x0 ../obj/bootstrap.o
  .text          0x00008014      0x108 ../obj/main.o
@@ -74,17 +85,26 @@ Linker script and memory map
                 0x000085f8                panos_uart_init
                 0x00008618                panos_uart_char
                 0x000086dc                panos_uart_int
-                0x0000877c                __bss_start = .
+ .text          0x0000877c      0x148 C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_divsi3.o)
+                0x0000877c                __divsi3
+                0x0000877c                __aeabi_idiv
+                0x000088a4                __aeabi_idivmod
+ .text          0x000088c4        0x4 C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_dvmd_tls.o)
+                0x000088c4                __aeabi_idiv0
+                0x000088c4                __aeabi_ldiv0
+                0x000088c8                __bss_start = .
 
-.bss            0x00008780       0x30
+.bss            0x000088d0       0x30
  *(.bss)
- .bss           0x00008780        0x0 ../obj/bootstrap.o
- .bss           0x00008780        0x0 ../obj/main.o
- .bss           0x00008780        0x0 ../obj/rpi_startup.o
- .bss           0x00008780        0x0 ../lib/\libpanos.a(gpio.o)
- .bss           0x00008780       0x30 ../lib/\libpanos.a(screen.o)
- .bss           0x000087b0        0x0 ../lib/\libpanos.a(timer.o)
- .bss           0x000087b0        0x0 ../lib/\libpanos.a(uart.o)
+ .bss           0x000088d0        0x0 ../obj/bootstrap.o
+ .bss           0x000088d0        0x0 ../obj/main.o
+ .bss           0x000088d0        0x0 ../obj/rpi_startup.o
+ .bss           0x000088d0        0x0 ../lib/\libpanos.a(gpio.o)
+ .bss           0x000088d0       0x30 ../lib/\libpanos.a(screen.o)
+ .bss           0x00008900        0x0 ../lib/\libpanos.a(timer.o)
+ .bss           0x00008900        0x0 ../lib/\libpanos.a(uart.o)
+ .bss           0x00008900        0x0 C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_divsi3.o)
+ .bss           0x00008900        0x0 C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a(_dvmd_tls.o)
                 0x00009000                . = ALIGN (0x1000)
                 0x00009000                __bss_end = .
 
@@ -93,6 +113,6 @@ Linker script and memory map
 LOAD ../obj/bootstrap.o
 LOAD ../obj/main.o
 LOAD ../obj/rpi_startup.o
-LOAD ../lib/\libgcc.a
 LOAD ../lib/\libpanos.a
+LOAD C:\Program Files (x86)\GNU Tools ARM Embedded\4.8 2014q2\lib\gcc\arm-none-eabi\4.8.4\libgcc.a
 OUTPUT(../obj/output.elf elf32-littlearm)

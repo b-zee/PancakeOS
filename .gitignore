@@ -31,3 +31,6 @@
 
 # Meta files
 *.pdf
+
+# Makefile
+*.local

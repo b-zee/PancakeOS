@@ -1,26 +1,28 @@
-TOOLCHAIN = arm-none-eabi
+include *.local
+
+TOOLCHAIN   = arm-none-eabi
 
 # Optimal options for GCC according to eLinux.
-C_OPTIONS	= -Wall -Wextra -Wpedantic -std=c99
-GCC_OPTIONS	= $(C_OPTIONS) -O0 -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
+C_OPTIONS   = -Wall -Wextra -Wpedantic -std=c99
+GCC_OPTIONS = $(C_OPTIONS) -O0 -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
 
 # Directories
-BIN_DIR	= ../bin/
-LIB_DIR	= ../lib/
-OBJ_DIR	= ../obj/
-RES_DIR	= ../res/
-SRC_DIR	= ./
+BIN_DIR = ../bin/
+LIB_DIR = ../lib/
+OBJ_DIR = ../obj/
+RES_DIR = ../res/
+SRC_DIR = ./
 
 # Target files
-TARGET	:= $(BIN_DIR)kernel.img
-LINKSCR	:= $(RES_DIR)kernel.ld
+TARGET  := $(BIN_DIR)kernel.img
+LINKSCR := $(RES_DIR)kernel.ld
 
-OUTPUT_LIST		:= $(OBJ_DIR)output.list
-OUTPUT_MAP		:= $(OBJ_DIR)output.map
-OUTPUT_LINKED	:= $(OBJ_DIR)output.elf
+OUTPUT_LIST     := $(OBJ_DIR)output.list
+OUTPUT_MAP      := $(OBJ_DIR)output.map
+OUTPUT_LINKED   := $(OBJ_DIR)output.elf
 
 # Library files to include
-LIBRARIES	= $(LIB_DIR)libpanos.a
+LIBRARIES = $(LIB_DIR)libpanos.a
 
 # Object files to compile into target
 OBJ_FILES := $(patsubst $(SRC_DIR)%.s,$(OBJ_DIR)%.o,$(wildcard $(SRC_DIR)*.s))
@@ -37,7 +39,7 @@ $(TARGET): $(OUTPUT_LINKED)
 
 # Create the linked object file from all objects.
 $(OUTPUT_LINKED): $(OBJ_FILES) $(LINKSCR) $(LIBRARIES)
-	$(TOOLCHAIN)-ld -Map $(OUTPUT_MAP) -o $(OUTPUT_LINKED) -T $(LINKSCR) $(OBJ_FILES) -L$(LIB_DIR) $(LIBRARIES:$(LIB_DIR)lib%.a=-l%)
+	$(TOOLCHAIN)-ld -Map $(OUTPUT_MAP) -o $(OUTPUT_LINKED) -T $(LINKSCR) $(OBJ_FILES) -L$(LIB_DIR) $(LIBRARIES:$(LIB_DIR)lib%.a=-l%) -L$(LIBGCC_DIR) -lgcc
 
 # Create object files from assembly files.
 $(OBJ_DIR)%.o: $(SRC_DIR)%.s
