@@ -2,7 +2,7 @@
 
 ## Brief description ##
 
-PancakeOS is an operating system that aims to provide a basic environment to communicate with components in the [Raspberry Pi](//raspberrypi.org) like the screen and GPIO pins.
+PancakeOS is an operating system that aims to provide a basic environment to communicate with components in the [Raspberry Pi](http://www.raspberrypi.org) like the screen and GPIO pins.
 
 
 ## Structure ##

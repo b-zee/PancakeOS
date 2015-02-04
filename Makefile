@@ -66,7 +66,7 @@ $(OBJ_DIR)%.o: %.s
 # Create object files (and lists) from c files.
 $(OBJ_DIR)%.o: %.c
 	$(GCC_PREFIX)gcc" $(GCC_PARAMS) -c $< -o $@
-#	$(GCC_PREFIX)gcc" $(GCC_PARAMS) -S $< -o $(basename $@).list
+	$(GCC_PREFIX)gcc" $(GCC_PARAMS) -S $< -o $(basename $@).list
 
 # Rule to make the listing file.
 $(OUTPUT_LIST): $(OUTPUT_LINKED)

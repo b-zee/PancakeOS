@@ -1,5 +1,8 @@
 #include <stdint.h>
+#include <stdlib.h>
+
 #include "panos/gpio.h"
+#include "panos/uart.h"
 #include "panos/timer.h"
 #include "panos/screen.h"
 
@@ -8,7 +11,10 @@
 
 int main(void)
 {
+	//int *a = malloc(sizeof *a);
+
 	int ret_val = panos_screen_initialize(SCREEN_WIDTH, SCREEN_HEIGHT, 24);
+
 
 	uint32_t interval;
 	if (ret_val == 0) { // Success
@@ -25,7 +31,6 @@ int main(void)
 				buffer[y * stride + x * 3 + 2] = y % 256;
 			}
 		}
-
 	} else {            // Failure
 		interval = 1000000;
 	}
@@ -41,6 +46,8 @@ int main(void)
 		panos_pin_clear(16);
 
 		panos_wait_us(interval);
+		
+		(void)panos_uart_string("Hello, World.\r\n");
 	}
 
 	return 0;

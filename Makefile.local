@@ -1,5 +1,5 @@
 # libgcc and libc library directory. Surround with quotes.
-LIBGCC_DIR = "C:\Program Files (x86)\GNU Tools ARM Embedded\4.9 2014q4\lib\gcc\arm-none-eabi\4.9.3"
+LIBGCC_DIR = "C:\Program Files (x86)\GNU Tools ARM Embedded\4.9 2014q4\lib\gcc\arm-none-eabi\4.9.3\fpu"
 LIBC_DIR   = "C:\Program Files (x86)\GNU Tools ARM Embedded\4.9 2014q4\arm-none-eabi\lib\fpu"
 
 # Toolchain to use. Start with quote; no end quote.

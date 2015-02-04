@@ -64,7 +64,7 @@ int panos_screen_initialize(uint16_t width, uint16_t height, uint8_t depth)
 		return PANOS_ERROR;
 	}
 
-	panos_uart_int((int)panos_fb.size, 10);
+	//panos_uart_int((int)panos_fb.size, 10);
 
 	return PANOS_SUCCES;
 }
