@@ -28,6 +28,9 @@
 *.x86_64
 *.hex
 
+*.list
+*.map
+
 # cache files for sublime text
 *.tmlanguage.cache
 *.tmPreferences.cache
