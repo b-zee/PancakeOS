@@ -12,5 +12,4 @@ SECTIONS
 	__bss_end = .;
 
 	/DISCARD/ : { *(*) }
-
 }
